@@ -1,14 +1,28 @@
 plugins {
+    id 'idea'
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
 }
 
-group 'org.otus.education'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+idea {
+    project {
+        languageLevel = 13
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+allprojects {
+    group "org.otus.education"
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: "java"
+    dependencies {
+        compile group: 'com.google.guava', name: 'guava', version: '29.0-jre'
+    }
 }
