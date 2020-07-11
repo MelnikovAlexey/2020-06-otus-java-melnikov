@@ -1,0 +1,25 @@
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14
+
+
+shadowJar {
+    archiveBaseName.set('hw02-gradle-generic-uber')
+    archiveVersion.set('1.0')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'org.otus.education.Main'
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
+
+test {
+
+    useJUnitPlatform()
+}
