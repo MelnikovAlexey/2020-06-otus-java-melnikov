@@ -4,17 +4,14 @@
 Студент: Мельников Алексей
 
 ## HomeWork 01
+[Реализация одного из методов библиотке guava](https://github.com/MelnikovAlexey/2020-06-otus-java-melnikov/tree/master/hw01-gradle)
 
-Создан модуль hw01-gradle, в build.gradle добавлена зависимость com.google.guava версии 29.0-jre.
+## HomeWork 02
 
-В классе HelloOtus реализована коллекция из библиотеки com.google.guava.
+Написать свою реализацию ArrayList на основе массива.
+class DIYarrayList<T> implements List<T>{...}
 
-Некоторые настройки build.gradle взяты с примера из лекции.
-
-командой
-```shell
-gradle :hw01-gradle:clean build
-```
-создан "толстый" jar 
-
-P.S В репозиторий "толстый" jar не загружен 
+Проверить, что на ней работают методы из java.util.Collections:
+Collections.addAll(Collection<? super T> c, T... elements)
+Collections.static <T> void copy(List<? super T> dest, List<? extends T> src)
+Collections.static <T> void sort(List<T> list, Comparator<? super T> c)
