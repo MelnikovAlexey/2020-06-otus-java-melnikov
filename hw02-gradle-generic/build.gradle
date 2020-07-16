@@ -18,8 +18,3 @@ shadowJar {
 }
 
 tasks.build.dependsOn tasks.shadowJar
-
-test {
-
-    useJUnitPlatform()
-}
