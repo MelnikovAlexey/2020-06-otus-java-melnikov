@@ -4,7 +4,7 @@
 Студент: Мельников Алексей
 
 ## HomeWork 01
-[Реализация одного из методов библиотке guava](https://github.com/MelnikovAlexey/2020-06-otus-java-melnikov/tree/master/hw01-gradle)
+[Реализация одного из методов библиотеки guava](https://github.com/MelnikovAlexey/2020-06-otus-java-melnikov/tree/master/hw01-gradle)
 
 ## HomeWork 02
 
