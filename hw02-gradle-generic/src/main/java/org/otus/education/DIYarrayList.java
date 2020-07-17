@@ -5,14 +5,14 @@ import java.util.function.Predicate;
 
 /**
  * Кастомная учебная реализация интерфейса List
- *
+ * <p>
  * NotSupportMethod
  * <ul>
  *     <li>{@link DIYarrayList#toArray(Object[])}</li>
  *     <li>{@link DIYarrayList#retainAll(Collection)}</li>
  *     <li>{@link DIYarrayList#subList(int, int)}</li>
+ *     <li>{@link DIYarrayList#listIterator(int)}</li>
  * </ul>
- *
  */
 
 public class DIYarrayList<E> implements List<E> {
@@ -74,7 +74,7 @@ public class DIYarrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] a) {
-        throw new UnsupportedOperationException();
+        throw notSupport();
     }
 
     @Override
@@ -97,7 +97,7 @@ public class DIYarrayList<E> implements List<E> {
     @Override
     public boolean containsAll(Collection<?> c) {
         return c.parallelStream().filter(Predicate.not(this::contains)).findAny().isEmpty();
-      //  throw notSupport();
+        //  throw notSupport();
     }
 
     @SuppressWarnings("unchecked")
@@ -132,7 +132,6 @@ public class DIYarrayList<E> implements List<E> {
     @Override
     public boolean removeAll(Collection<?> c) {
         return c.stream().filter(this::removeAllElements).count() > 0;
-
     }
 
     @Override
@@ -237,8 +236,9 @@ public class DIYarrayList<E> implements List<E> {
     }
 
     private void checkIndex(int index) {
-        if (index < 0 || index >= size)
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
+        }
     }
 
     private E getElement(int index) {
@@ -257,8 +257,8 @@ public class DIYarrayList<E> implements List<E> {
     private boolean removeAllElements(Object o) {
         boolean isRemoved = false;
         Iterator<E> iterator = iterator();
-        while (iterator.hasNext()){
-            if (Objects.equals(o,iterator.next())){
+        while (iterator.hasNext()) {
+            if (Objects.equals(o, iterator.next())) {
                 iterator.remove();
                 isRemoved = true;
             }
@@ -268,11 +268,9 @@ public class DIYarrayList<E> implements List<E> {
 
     @SuppressWarnings("unchecked")
     private void initReSizeArray(int newSize) {
-        if (Objects.isNull(arrayElements)) {
-            arrayElements = (E[]) new Object[newSize];
-        } else {
-            arrayElements = Arrays.copyOf(arrayElements, newSize);
-        }
+        arrayElements = Objects.isNull(arrayElements)
+                ? (E[]) new Object[newSize]
+                : Arrays.copyOf(arrayElements, newSize);
     }
 
     private class DIYarrayIterator<I> implements ListIterator<I> {
@@ -337,7 +335,6 @@ public class DIYarrayList<E> implements List<E> {
         @SuppressWarnings("unchecked")
         public void set(I i) {
             DIYarrayList.this.set(currentPosition, (E) i);
-
         }
 
         @Override
