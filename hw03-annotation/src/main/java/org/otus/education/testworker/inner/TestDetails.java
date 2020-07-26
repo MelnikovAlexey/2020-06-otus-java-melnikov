@@ -26,7 +26,7 @@ public class TestDetails {
     }
 
     /**
-     * @param name имя теста
+     * @param name      имя теста
      * @param throwable информация об ошибке тестирования
      * @return детали выполненого тестирования
      */
@@ -53,5 +53,10 @@ public class TestDetails {
      */
     public Optional<Throwable> getThrowable() {
         return Optional.ofNullable(throwable);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Тест: %s -> %s", getName(), isSuccess() ? "Успешно" : "Провален");
     }
 }
