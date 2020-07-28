@@ -3,6 +3,7 @@ package org.otus.education.testworker;
 import org.otus.education.testworker.api.After;
 import org.otus.education.testworker.api.Before;
 import org.otus.education.testworker.api.Test;
+import org.otus.education.testworker.inner.PrepareTestedClassException;
 import org.otus.education.testworker.inner.TestWorkerClass;
 import org.otus.education.testworker.inner.TestWorkerMethodsCreator;
 

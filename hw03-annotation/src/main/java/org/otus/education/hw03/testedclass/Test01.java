@@ -1,10 +1,10 @@
-package org.otus.education.testworker.hw03.testedclass;
+package org.otus.education.hw03.testedclass;
 
 import org.otus.education.testworker.api.After;
 import org.otus.education.testworker.api.Before;
 import org.otus.education.testworker.api.Test;
 
-public class Test02 {
+public class Test01 {
     private String text = "test";
 
     @Test
@@ -20,7 +20,7 @@ public class Test02 {
 
     @Test
     public String getTestText() {
-        text = "Hello World Test2";
+        text = "Hello World";
         System.out.println(text);
         return text;
     }

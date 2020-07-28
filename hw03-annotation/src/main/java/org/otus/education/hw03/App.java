@@ -1,4 +1,4 @@
-package org.otus.education.testworker.hw03;
+package org.otus.education.hw03;
 
 import org.otus.education.testworker.PackageScannerFilterPredicate;
 import org.otus.education.testworker.PackageScannerImpl;
@@ -16,27 +16,33 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        PackageScanner scanner = new PackageScannerImpl("org.otus.education.testworker.hw03", new PackageScannerFilterPredicate());
+        PackageScanner scanner = new PackageScannerImpl("org.otus.education.hw03", new PackageScannerFilterPredicate());
         final Collection<Class<?>> scan = scanner.scan();
         TestedClassLauncher launcher = new TestedClassLauncher(new PrepareTestedClassByAnnotation());
         List<ResultsTestInfo> resultsTestInfos = new ArrayList<>();
+        System.out.println();
+        System.out.println("Printing information about trinity: before, test, after\r\n");
         for (Class<?> aClass : scan) {
             ResultsTestInfo launch = launcher.launch(aClass);
             resultsTestInfos.add(launch);
         }
-        System.out.println();
+
+        printStatistic(resultsTestInfos);
+    }
+
+    private static void printStatistic(List<ResultsTestInfo> resultsTestInfos) {
+        System.out.println("Now some statistics:");
         TotalResult totalResult = TotalResult.buildFromResultTestByClass(resultsTestInfos);
 
         for (ResultsTestInfo info : resultsTestInfos) {
             if (info.isEmpty()) {
                 continue;
             }
-            System.out.println("Statistic by class:");
+            System.out.println("*************************\r\nStatistic by class:\r\n");
             for (TestDetails details : info.getDetailsCollection()) {
                 System.out.println(details.toString());
-
             }
-            System.out.println(info.toString());
+            System.out.println("\r\n"+ info.toString()+"*************************");
         }
         System.out.println();
         System.out.println(totalResult.toString());

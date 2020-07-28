@@ -1,4 +1,4 @@
-package org.otus.education.testworker;
+package org.otus.education.testworker.inner;
 
 public class PrepareTestedClassException extends RuntimeException {
     public final Class clazz;
