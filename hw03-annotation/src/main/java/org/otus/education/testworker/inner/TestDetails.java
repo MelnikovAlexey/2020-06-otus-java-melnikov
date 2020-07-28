@@ -3,35 +3,44 @@ package org.otus.education.testworker.inner;
 import java.util.Optional;
 
 public class TestDetails {
+    private final Class<?> clazz;
     private final boolean testResult;
     private final String name;
     private final Throwable throwable;
+    private final String description;
 
-    private TestDetails(boolean testResult, String name, Throwable throwable) {
+    private TestDetails(Class<?> clazz, boolean testResult, String name, Throwable throwable, String description) {
+        this.clazz = clazz;
         this.testResult = testResult;
         this.name = name;
         this.throwable = throwable;
+        this.description = description;
     }
 
-    private TestDetails(boolean testResult, String name) {
-        this(testResult, name, null);
+    private TestDetails(Class<?> clazz, boolean testResult, String name, String description) {
+        this(clazz, testResult, name, null, description);
     }
 
     /**
      * @param name имя теста
      * @return детали выполненого тестирования
      */
-    public static TestDetails success(String name) {
-        return new TestDetails(true, name);
+    public static TestDetails success(Class<?> clazz, String name, String description) {
+        return new TestDetails(clazz, true, name, description);
     }
 
     /**
-     * @param name      имя теста
-     * @param throwable информация об ошибке тестирования
+     * @param name        имя теста
+     * @param throwable   информация об ошибке тестирования
+     * @param description
      * @return детали выполненого тестирования
      */
-    public static TestDetails error(String name, Throwable throwable) {
-        return new TestDetails(false, name, throwable);
+    public static TestDetails error(Class<?> clazz, String name, Throwable throwable, String description) {
+        return new TestDetails(clazz, false, name, throwable, description);
+    }
+
+    public Class<?> getClazz() {
+        return clazz;
     }
 
     /**
@@ -57,6 +66,6 @@ public class TestDetails {
 
     @Override
     public String toString() {
-        return String.format("Тест: %s -> %s", getName(), isSuccess() ? "Успешно" : "Провален");
+        return String.format("Test for %s: Method: %s -> %s", getClazz(), getName(), isSuccess() ? "Success" : "Failed");
     }
 }

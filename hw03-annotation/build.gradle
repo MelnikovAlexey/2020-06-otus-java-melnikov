@@ -6,6 +6,11 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
 
+dependencies {
+    implementation 'com.google.guava:guava'
+    testImplementation('org.junit.jupiter:junit-jupiter')
+}
+
 shadowJar {
     archiveBaseName.set('hw03-annotation-uber')
     archiveVersion.set('1.0')
