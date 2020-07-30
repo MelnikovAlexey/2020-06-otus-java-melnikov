@@ -1,9 +1,9 @@
 package org.otus.education.testworker.inner;
 
-public class PrepareTestedClassException extends RuntimeException {
+public class PreparerTestClassException extends RuntimeException {
     public final Class clazz;
 
-    public PrepareTestedClassException(String message, Class clazz) {
+    public PreparerTestClassException(String message, Class clazz) {
         super(message);
         this.clazz = clazz;
     }

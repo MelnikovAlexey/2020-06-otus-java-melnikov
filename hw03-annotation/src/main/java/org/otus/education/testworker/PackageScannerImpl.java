@@ -16,17 +16,25 @@ public class PackageScannerImpl implements PackageScanner {
     private final Predicate<Class<?>> filter;
     private final ClassLoader classLoader;
 
-    public PackageScannerImpl(String packageName, Predicate<Class<?>> filter) {
+    private PackageScannerImpl(String packageName, Predicate<Class<?>> filter) {
         this(packageName, filter,
                 Objects.isNull(Thread.currentThread().getContextClassLoader()) ?
                         PackageScannerImpl.class.getClassLoader() :
                         Thread.currentThread().getContextClassLoader());
     }
 
-    public PackageScannerImpl(String packageName, Predicate<Class<?>> filter, ClassLoader classLoader) {
+    private PackageScannerImpl(String packageName, Predicate<Class<?>> filter, ClassLoader classLoader) {
         this.packageName = packageName;
         this.filter = filter;
         this.classLoader = classLoader;
+    }
+
+    public static PackageScannerImpl build(String packageName, Predicate<Class<?>> filter, ClassLoader classLoader) {
+        return new PackageScannerImpl(packageName, filter, classLoader);
+    }
+
+    public static PackageScannerImpl build(String packageName, Predicate<Class<?>> filter) {
+        return new PackageScannerImpl(packageName, filter);
     }
 
     @Override

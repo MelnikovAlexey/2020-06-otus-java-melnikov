@@ -9,17 +9,21 @@ public class TrinityReflectMethods {
     private final Method before;
     private final Method after;
     private final Method test;
-    private final Class clazz;
+    private final Class<?> clazz;
     private Object instance;
 
-    public TrinityReflectMethods(Class clazz, Method before, Method test, Method after) {
+    private TrinityReflectMethods(Class<?> clazz, Method before, Method test, Method after) {
         if (Objects.isNull(test)) {
-            throw new NullPointerException("Нет тестируемого метода");
+            throw new NullPointerException("РќРµС‚ С‚РµСЃС‚РёСЂСѓРµРјРѕРіРѕ РјРµС‚РѕРґР°");
         }
         this.before = before;
         this.after = after;
         this.test = test;
         this.clazz = clazz;
+    }
+
+    public static TrinityReflectMethods build(Class<?> clazz, Method before, Method test, Method after){
+        return new TrinityReflectMethods( clazz, before, test, after);
     }
 
     public Optional<Throwable> init() {

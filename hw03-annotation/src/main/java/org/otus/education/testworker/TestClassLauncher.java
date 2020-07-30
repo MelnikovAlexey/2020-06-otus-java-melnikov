@@ -11,12 +11,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TestedClassLauncher {
+public class TestClassLauncher {
 
-    private final PrepareTestedClassByAnnotation prepareTestedClass;
+    private final PreparerTestClassByAnnotation prepareTestedClass;
 
-    public TestedClassLauncher(PrepareTestedClassByAnnotation prepareTestedClass) {
+    private TestClassLauncher(PreparerTestClassByAnnotation prepareTestedClass) {
         this.prepareTestedClass = prepareTestedClass;
+    }
+    public static TestClassLauncher build(PreparerTestClassByAnnotation prepareTestedClass){
+        return new TestClassLauncher(prepareTestedClass);
     }
 
     public ResultsTestInfo launch(Class<?> clazz) {
@@ -28,10 +31,13 @@ public class TestedClassLauncher {
         }
         List<TestDetails> details = new ArrayList<>(testWorkerClass.getReflectMethodsList().size());
         for (TrinityReflectMethods methods : testWorkerClass.getReflectMethodsList()) {
-            Optional<Throwable> init, before, after, test;
+            Optional<Throwable> init,
+                    before,
+                    after,
+                    test;
             init = methods.init();
             before = methods.before();
-            test = methods.test();
+            test = before.isEmpty()? methods.test(): Optional.empty();
             after = methods.after();
             details.add(createDetailTest(clazz, methods, init, before, test, after));
             System.out.println();

@@ -6,24 +6,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TestWorkerMethodsCreator {
-    private final Class clazz;
+    private final Class<?> clazz;
     private Method before;
     private Method after;
-    private List<Method> tests = new ArrayList<>();
+    private final List<Method> tests = new ArrayList<>();
 
-    private TestWorkerMethodsCreator(Class clazz) {
+    private TestWorkerMethodsCreator(Class<?> clazz) {
         this.clazz = clazz;
     }
 
-    public static TestWorkerMethodsCreator build(Class clazz) {
+    public static TestWorkerMethodsCreator build(Class<?> clazz) {
         return new TestWorkerMethodsCreator(clazz);
     }
 
-    public TestWorkerClass creatorClass() {
-        return new TestWorkerClass(clazz, createTrinityMethods());
-    }
-
-    public Class getClazz() {
+    public Class<?> getClazz() {
         return clazz;
     }
 
@@ -52,6 +48,6 @@ public class TestWorkerMethodsCreator {
     }
 
     public List<TrinityReflectMethods> createTrinityMethods() {
-        return tests.stream().map(f -> new TrinityReflectMethods(clazz, before, f, after)).collect(Collectors.toList());
+        return tests.stream().map(f ->  TrinityReflectMethods.build(clazz, before, f, after)).collect(Collectors.toList());
     }
 }

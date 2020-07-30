@@ -55,10 +55,11 @@ public class ResultsTestInfo {
         return detailsCollection.isEmpty();
     }
 
+
     @Override
     public String toString() {
-        return String.format("Total Class Test running: %d\r\n" +
-                "Success Test: %d\r\n" +
-                "Failed Test: %d\r\n", total, success, failed);
+        return String.format("Total Class Test running: %d%n" +
+                "Success Test: %d%n" +
+                "Failed Test: %d%n", total, success, failed);
     }
 }

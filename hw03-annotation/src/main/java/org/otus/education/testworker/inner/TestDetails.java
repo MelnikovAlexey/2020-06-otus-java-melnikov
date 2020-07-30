@@ -22,18 +22,18 @@ public class TestDetails {
     }
 
     /**
-     * @param name имя теста
-     * @return детали выполненого тестирования
+     * @param name РёРјСЏ С‚РµСЃС‚Р°
+     * @return РґРµС‚Р°Р»Рё РІС‹РїРѕР»РЅРµРЅРѕРіРѕ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
      */
     public static TestDetails success(Class<?> clazz, String name, String description) {
         return new TestDetails(clazz, true, name, description);
     }
 
     /**
-     * @param name        имя теста
-     * @param throwable   информация об ошибке тестирования
+     * @param name        РёРјСЏ С‚РµСЃС‚Р°
+     * @param throwable   РёРЅС„РѕСЂРјР°С†РёСЏ РѕР± РѕС€РёР±РєРµ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
      * @param description
-     * @return детали выполненого тестирования
+     * @return РґРµС‚Р°Р»Рё РІС‹РїРѕР»РЅРµРЅРѕРіРѕ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ
      */
     public static TestDetails error(Class<?> clazz, String name, Throwable throwable, String description) {
         return new TestDetails(clazz, false, name, throwable, description);
@@ -44,21 +44,21 @@ public class TestDetails {
     }
 
     /**
-     * @return результат тестрирования
+     * @return СЂРµР·СѓР»СЊС‚Р°С‚ С‚РµСЃС‚СЂРёСЂРѕРІР°РЅРёСЏ
      */
     public boolean isSuccess() {
         return testResult;
     }
 
     /**
-     * @return имя теста
+     * @return РёРјСЏ С‚РµСЃС‚Р°
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @return информацию об ошибке выполнения теста
+     * @return РёРЅС„РѕСЂРјР°С†РёСЋ РѕР± РѕС€РёР±РєРµ РІС‹РїРѕР»РЅРµРЅРёСЏ С‚РµСЃС‚Р°
      */
     public Optional<Throwable> getThrowable() {
         return Optional.ofNullable(throwable);
