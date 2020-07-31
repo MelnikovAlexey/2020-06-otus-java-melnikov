@@ -1,4 +1,4 @@
-package org.otus.education.testworker.api;
+package org.otus.education.hw03.testworker.api;
 
 import java.util.Collection;
 

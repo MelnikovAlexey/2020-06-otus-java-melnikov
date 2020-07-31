@@ -1,8 +1,8 @@
-package org.otus.education.testworker;
+package org.otus.education.hw03.testworker;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
-import org.otus.education.testworker.api.PackageScanner;
+import org.otus.education.hw03.testworker.api.PackageScanner;
 
 import java.util.ArrayList;
 import java.util.Collection;

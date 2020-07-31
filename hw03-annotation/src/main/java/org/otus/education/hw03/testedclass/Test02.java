@@ -1,8 +1,8 @@
 package org.otus.education.hw03.testedclass;
 
-import org.otus.education.testworker.api.After;
-import org.otus.education.testworker.api.Before;
-import org.otus.education.testworker.api.Test;
+import org.otus.education.hw03.testworker.api.After;
+import org.otus.education.hw03.testworker.api.Before;
+import org.otus.education.hw03.testworker.api.Test;
 
 public class Test02 {
     private String text = "test";

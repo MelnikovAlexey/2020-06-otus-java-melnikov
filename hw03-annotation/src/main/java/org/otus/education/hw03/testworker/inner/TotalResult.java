@@ -1,7 +1,6 @@
-package org.otus.education.testworker.inner;
+package org.otus.education.hw03.testworker.inner;
 
 import java.util.Collection;
-import java.util.List;
 
 public class TotalResult {
     private final int total;

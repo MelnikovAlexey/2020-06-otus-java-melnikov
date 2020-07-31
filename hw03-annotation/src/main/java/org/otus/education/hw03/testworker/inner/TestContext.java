@@ -1,18 +1,18 @@
-package org.otus.education.testworker.inner;
+package org.otus.education.hw03.testworker.inner;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Optional;
 
-public class TrinityReflectMethods {
+public class TestContext {
     private final Method before;
     private final Method after;
     private final Method test;
     private final Class<?> clazz;
     private Object instance;
 
-    private TrinityReflectMethods(Class<?> clazz, Method before, Method test, Method after) {
+    private TestContext(Class<?> clazz, Method before, Method test, Method after) {
         if (Objects.isNull(test)) {
             throw new NullPointerException("Нет тестируемого метода");
         }
@@ -22,8 +22,8 @@ public class TrinityReflectMethods {
         this.clazz = clazz;
     }
 
-    public static TrinityReflectMethods build(Class<?> clazz, Method before, Method test, Method after){
-        return new TrinityReflectMethods( clazz, before, test, after);
+    public static TestContext build(Class<?> clazz, Method before, Method test, Method after){
+        return new TestContext( clazz, before, test, after);
     }
 
     public Optional<Throwable> init() {

@@ -1,4 +1,4 @@
-package org.otus.education.testworker;
+package org.otus.education.hw03.testworker;
 
 import java.util.function.Predicate;
 

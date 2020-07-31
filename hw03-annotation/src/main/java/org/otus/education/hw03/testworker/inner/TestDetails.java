@@ -1,4 +1,4 @@
-package org.otus.education.testworker.inner;
+package org.otus.education.hw03.testworker.inner;
 
 import java.util.Optional;
 
@@ -66,6 +66,6 @@ public class TestDetails {
 
     @Override
     public String toString() {
-        return String.format("Test for %s: Method: %s -> %s", getClazz(), getName(), isSuccess() ? "Success" : "Failed");
+        return String.format("Test for %s: Method: %s -> %s", getClazz(), getName(), isSuccess() ? "Success" : "Failed because: " + getThrowable().get());
     }
 }

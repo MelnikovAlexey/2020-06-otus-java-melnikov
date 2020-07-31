@@ -1,4 +1,4 @@
-package org.otus.education.testworker.api;
+package org.otus.education.hw03.testworker.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Before {
+public @interface After {
 }

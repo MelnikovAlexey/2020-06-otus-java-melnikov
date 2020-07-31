@@ -8,7 +8,6 @@ targetCompatibility = JavaVersion.VERSION_14
 
 dependencies {
     implementation 'com.google.guava:guava'
-    testImplementation('org.junit.jupiter:junit-jupiter')
 }
 
 shadowJar {
@@ -16,7 +15,7 @@ shadowJar {
     archiveVersion.set('1.0')
     archiveClassifier.set('')
     manifest {
-        attributes 'Main-Class': 'org.otus.education.Main'
+        attributes 'Main-Class': 'org.otus.education.hw03.App'
     }
 }
 

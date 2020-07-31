@@ -1,22 +1,22 @@
-package org.otus.education.testworker.inner;
+package org.otus.education.hw03.testworker.inner;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TestWorkerMethodsCreator {
+public class TestContextCreator {
     private final Class<?> clazz;
     private Method before;
     private Method after;
     private final List<Method> tests = new ArrayList<>();
 
-    private TestWorkerMethodsCreator(Class<?> clazz) {
+    private TestContextCreator(Class<?> clazz) {
         this.clazz = clazz;
     }
 
-    public static TestWorkerMethodsCreator build(Class<?> clazz) {
-        return new TestWorkerMethodsCreator(clazz);
+    public static TestContextCreator build(Class<?> clazz) {
+        return new TestContextCreator(clazz);
     }
 
     public Class<?> getClazz() {
@@ -47,7 +47,7 @@ public class TestWorkerMethodsCreator {
         return tests.isEmpty();
     }
 
-    public List<TrinityReflectMethods> createTrinityMethods() {
-        return tests.stream().map(f ->  TrinityReflectMethods.build(clazz, before, f, after)).collect(Collectors.toList());
+    public List<TestContext> createMethods() {
+        return tests.stream().map(f -> TestContext.build(clazz, before, f, after)).collect(Collectors.toList());
     }
 }
