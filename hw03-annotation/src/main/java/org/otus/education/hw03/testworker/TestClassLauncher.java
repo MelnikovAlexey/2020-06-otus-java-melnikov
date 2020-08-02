@@ -12,10 +12,10 @@ import java.util.stream.Stream;
 
 public class TestClassLauncher {
 
-    private final PreparerTestClassByAnnotation prepareTestedClass;
+    private final PreparerTestClassByAnnotation preparerClass;
 
-    private TestClassLauncher(PreparerTestClassByAnnotation prepareTestedClass) {
-        this.prepareTestedClass = prepareTestedClass;
+    private TestClassLauncher(PreparerTestClassByAnnotation preparerClass) {
+        this.preparerClass = preparerClass;
     }
 
     public static TestClassLauncher build(PreparerTestClassByAnnotation prepareTestedClass) {
@@ -23,28 +23,32 @@ public class TestClassLauncher {
     }
 
     public ResultsTestInfo launch(Class<?> clazz) {
-        List<TestContext> testContext;
+
+        List<TestContext> ctxList;
         try {
-            testContext = prepareTestedClass.prepare(clazz);
+            ctxList = preparerClass.prepare(clazz);
         } catch (Exception e) {
             return ResultsTestInfo.buildEmpty();
         }
-        List<TestDetails> details = new ArrayList<>(testContext.size());
-        for (TestContext methods : testContext) {
-            Optional<Throwable> init,
-                    before,
-                    after,
-                    test;
-            init = methods.init();
-            before = methods.before();
-            test = before.isEmpty() ? methods.test() : Optional.empty();
-            after = methods.after();
-            List<Throwable> listThrow = Stream.of(init, before, test, after)
+
+        List<TestDetails> details = new ArrayList<>(ctxList.size());
+        for (TestContext ctx : ctxList) {
+
+            Optional<Throwable> creationError = ctx.createTestInstance();
+            Optional<Throwable> beforeMethodExecutionError = ctx.executeBeforeMethod();
+            Optional<Throwable> testMethodExecutionError = beforeMethodExecutionError.isEmpty() ?
+                    ctx.executeTestMethod() : Optional.empty();
+            Optional<Throwable> afterMethodExecutionError = ctx.executeAfterMethod();
+
+            List<Throwable> listThrow = Stream.of(creationError,
+                    beforeMethodExecutionError,
+                    testMethodExecutionError,
+                    afterMethodExecutionError)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList());
-            details.add(createDetailTest(clazz, methods, listThrow));
-            System.out.println();
+
+            details.add(createDetailTest(clazz, ctx, listThrow));
         }
         return ResultsTestInfo.buildFromDetails(details);
     }

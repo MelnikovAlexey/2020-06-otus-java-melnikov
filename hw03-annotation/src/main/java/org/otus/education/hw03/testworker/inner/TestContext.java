@@ -26,7 +26,7 @@ public class TestContext {
         return new TestContext( clazz, before, test, after);
     }
 
-    public Optional<Throwable> init() {
+    public Optional<Throwable> createTestInstance() {
         try {
             instance = clazz.getDeclaredConstructor().newInstance();
         } catch (Throwable throwable) {
@@ -39,15 +39,15 @@ public class TestContext {
         return test.getName();
     }
 
-    public Optional<Throwable> before() {
+    public Optional<Throwable> executeBeforeMethod() {
         return invokeMethod(before);
     }
 
-    public Optional<Throwable> after() {
+    public Optional<Throwable> executeAfterMethod() {
         return invokeMethod(after);
     }
 
-    public Optional<Throwable> test() {
+    public Optional<Throwable> executeTestMethod() {
         return invokeMethod(test);
     }
 
