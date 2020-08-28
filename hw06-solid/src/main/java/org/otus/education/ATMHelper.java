@@ -41,15 +41,28 @@ public class ATMHelper {
         }
     }
 
-    public static ATM initATM() {
+    /**
+     * @param limit устанавливаетсяя лимит купюр в касете.
+     * @return
+     */
+    public static ATM initATM(String max) {
+        int limit;
+        try {
+            limit =  Integer.parseInt(max);
+        }catch (NumberFormatException e){
+            throw new IllegalArgumentException("Invalid limit argument.");
+        }
+
         return new ATMImpl(List.of(
-                new ATMCellImpl(C100, 22, 1),
-                new ATMCellImpl(C200, 30, 0),
-                new ATMCellImpl(C500, 20, 19),
-                new ATMCellImpl(C1000, 50, 35),
-                new ATMCellImpl(C2000, 25, 20),
-                new ATMCellImpl(C5000, 40, 30)
+                new ATMCellImpl(C100, limit, 1),
+                new ATMCellImpl(C200, limit, 0),
+                new ATMCellImpl(C500, limit, 19),
+                new ATMCellImpl(C1000, limit, 35),
+                new ATMCellImpl(C2000, limit, 20),
+                new ATMCellImpl(C5000, limit, 30)
         ), new CashOutStrategyImpl(), new PutStrategyImpl());
     }
+
+
 
 }
