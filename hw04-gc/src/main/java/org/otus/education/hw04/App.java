@@ -4,48 +4,46 @@ import com.sun.management.GarbageCollectionNotificationInfo;
 import org.otus.education.hw04.bench.Benchmark;
 
 import javax.management.*;
-import javax.management.openmbean.CompositeData;
 import java.lang.management.GarbageCollectorMXBean;
-import java.lang.management.ManagementFactory;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class App {
-    public static void main(String[] args) throws InterruptedException, MalformedObjectNameException, NotCompliantMBeanException, InstanceAlreadyExistsException, MBeanRegistrationException {
-        System.out.println("Starting pid: " + ManagementFactory.getRuntimeMXBean().getName());
-        switchOnMonitoring();
-        long beginTime = System.currentTimeMillis();
+    public static void main(String[] args) throws InterruptedException {
+        final Map<String, Long> statistics = new HashMap<>();
 
-        int size = 5 * 1000 * 1000;
-        int loopCounter = 1000;
-        //int loopCounter = 100000;
-        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = new ObjectName("org.otus:type=Benchmark");
+        switchOnMonitoring(statistics);
 
-        Benchmark mbean = new Benchmark(loopCounter);
-        mbs.registerMBean(mbean, name);
-        mbean.setSize(size);
-        mbean.run();
 
-        System.out.println("time:" + (System.currentTimeMillis() - beginTime) / 1000);
+        final long start = System.currentTimeMillis();
+        Benchmark benchmark = new Benchmark(2500, 15000);
+        benchmark.run();
+
+        System.out.println(statistics.toString());
+        System.out.println("ALL RUN TIME: " + (System.currentTimeMillis() - start));
     }
 
-    private static void switchOnMonitoring() {
+    private static void switchOnMonitoring(Map<String,Long> statistics) {
         List<GarbageCollectorMXBean> gcbeans = java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
         for (GarbageCollectorMXBean gcbean : gcbeans) {
-            System.out.println("GC name:" + gcbean.getName());
             NotificationEmitter emitter = (NotificationEmitter) gcbean;
             NotificationListener listener = (notification, handback) -> {
                 if (notification.getType().equals(GarbageCollectionNotificationInfo.GARBAGE_COLLECTION_NOTIFICATION)) {
-                    GarbageCollectionNotificationInfo info = GarbageCollectionNotificationInfo.from((CompositeData) notification.getUserData());
-                    String gcName = info.getGcName();
-                    String gcAction = info.getGcAction();
-                    String gcCause = info.getGcCause();
+                    if (gcbean.getName().equalsIgnoreCase("PS Scavenge")
+                            || gcbean.getName().equalsIgnoreCase("G1 Young Generation")
+                            || gcbean.getName().equalsIgnoreCase("Copy")) {
+                        statistics.put("YOUNG GC COUNT", gcbean.getCollectionCount());
+                        statistics.put("YOUNG GC TIME", gcbean.getCollectionTime());
 
-                    long startTime = info.getGcInfo().getStartTime();
-                    long duration = info.getGcInfo().getDuration();
-
-                    System.out.println("start:" + startTime + " Name:" + gcName + ", action:" + gcAction + ", gcCause:" + gcCause + "(" + duration + " ms)");
+                    } else if (gcbean.getName().equalsIgnoreCase("PS MarkSweep")
+                            || gcbean.getName().equalsIgnoreCase("G1 Old Generation")
+                            || gcbean.getName().equalsIgnoreCase("MarkSweepCompact")) {
+                        statistics.put("OLD GC COUNT", gcbean.getCollectionCount());
+                        statistics.put("OLD GC TIME", gcbean.getCollectionTime());
+                    }
                 }
+
             };
             emitter.addNotificationListener(listener, null, null);
         }
