@@ -102,7 +102,10 @@ public class Message {
         if (!Objects.equals(field7, message.field7)) return false;
         if (!Objects.equals(field8, message.field8)) return false;
         if (!Objects.equals(field9, message.field9)) return false;
-        return Objects.equals(field10, message.field10);
+        if (!Objects.equals(field10, message.field10)) return false;
+        if (!Objects.equals(field11, message.field11)) return false;
+        if (!Objects.equals(field12, message.field12)) return false;
+        return Objects.equals(field13, message.field13);
     }
 
     @Override
@@ -117,6 +120,9 @@ public class Message {
         result = 31 * result + (field8 != null ? field8.hashCode() : 0);
         result = 31 * result + (field9 != null ? field9.hashCode() : 0);
         result = 31 * result + (field10 != null ? field10.hashCode() : 0);
+        result = 31 * result + (field11 != null ? field11.hashCode() : 0);
+        result = 31 * result + (field12 != null ? field12.hashCode() : 0);
+        result = 31 * result + (field13 != null ? field13.hashCode() : 0);
         return result;
     }
 

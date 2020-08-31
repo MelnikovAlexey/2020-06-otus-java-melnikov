@@ -8,17 +8,15 @@ import java.util.List;
 
 public class ListenerHistoryPrinter implements Listener {
 
-    private final List<String> logHistory;
+    private final History logHistory;
 
-    public ListenerHistoryPrinter() {
-        this.logHistory = new LinkedList<>();
+    public ListenerHistoryPrinter(History history) {
+        this.logHistory = history;
     }
 
     @Override
     public void onUpdated(Message oldMsg, Message newMsg) {
         var logString = String.format("oldMsg:%s, newMsg:%s", oldMsg, newMsg);
         logHistory.add(logString);
-        System.out.println("Print history");
-        logHistory.forEach(System.out::println);
     }
 }

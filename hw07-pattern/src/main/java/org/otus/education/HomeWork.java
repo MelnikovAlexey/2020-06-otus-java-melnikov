@@ -1,6 +1,7 @@
 package org.otus.education;
 
 import org.otus.education.handler.ComplexProcessor;
+import org.otus.education.listener.homework.History;
 import org.otus.education.listener.homework.ListenerHistoryPrinter;
 import org.otus.education.processor.Processor;
 import org.otus.education.processor.homework.ProcessorEvenException;
@@ -26,9 +27,9 @@ public class HomeWork {
     public static void main(String[] args) {
         List<Processor> processors = List.of(new ProcessorFields1113Swapper(), new ProcessorEvenException(new ProcessorUpperField10()));
         //Ошибка из туду 3 выводится в консоль консумером complexProcessor-а
-        ComplexProcessor complexProcessor = new ComplexProcessor(processors, ex -> System.out.println( ex.getClass().toString() + ": "+ ex.getMessage()));
-
-        var listenerHistoryPrinter = new ListenerHistoryPrinter();
+        ComplexProcessor complexProcessor = new ComplexProcessor(processors, ex -> System.out.println(ex.getClass().toString() + ": " + ex.getMessage()));
+        History history = new History();
+        var listenerHistoryPrinter = new ListenerHistoryPrinter(history);
         complexProcessor.addListener(listenerHistoryPrinter);
         var message = new Message.Builder()
                 .field1("field1")
@@ -45,6 +46,8 @@ public class HomeWork {
             message = complexProcessor.handle(message);
             System.out.println();
         }
+        System.out.println("Print History");
+        history.forEach(System.out::println);
 
         complexProcessor.removeListener(listenerHistoryPrinter);
     }
