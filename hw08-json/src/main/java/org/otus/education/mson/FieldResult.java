@@ -9,8 +9,16 @@ public class FieldResult {
         this.value = value;
     }
 
+    public String getField() {
+        return field;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
-        return String.format("\"%s\":%s",field,value);
+        return String.format("\"%s\":%s", field, value);
     }
 }

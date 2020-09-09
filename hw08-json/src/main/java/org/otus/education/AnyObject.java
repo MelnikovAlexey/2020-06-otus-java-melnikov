@@ -15,7 +15,7 @@ public class AnyObject {
     private char aChar;
     private boolean aBoolean;
     private short aShort;
-    private final char[] charArray = new char[]{'t', 'e', 's', 't','1', '!'};
+    private final char[] charArray = new char[]{'t', 'e', 's', 't', '1', '!'};
     private final int[] intArray = new int[]{9, 1, 1, 1, 1, 2};
     private final int[][][] multiIntArray = {{{0}, {3}}};
     private final double[] doubleArray = new double[]{0.1, 0.2, 0.4};
@@ -177,7 +177,7 @@ public class AnyObject {
         return result;
     }
 
-    public static class Builder{
+    public static class Builder {
         private String str;
         private int anInt;
         private long aLong;
@@ -188,7 +188,7 @@ public class AnyObject {
         private boolean aBoolean;
         private short aShort;
 
-        public Builder(){
+        public Builder() {
         }
 
         private Builder(String str, int anInt, long aLong, double aDouble, float aFloat, byte aByte, char aChar, boolean aBoolean, short aShort) {
@@ -203,45 +203,53 @@ public class AnyObject {
             this.aShort = aShort;
         }
 
-        public Builder setStr(String str){
+        public Builder setStr(String str) {
             this.str = str;
             return this;
         }
-        public Builder setInt(int anInt){
+
+        public Builder setInt(int anInt) {
             this.anInt = anInt;
             return this;
         }
-        public Builder setLong(long aLong){
+
+        public Builder setLong(long aLong) {
             this.aLong = aLong;
             return this;
         }
-        public Builder setDouble(double aDouble){
+
+        public Builder setDouble(double aDouble) {
             this.aDouble = aDouble;
             return this;
         }
-        public Builder setFloat(float aFloat){
+
+        public Builder setFloat(float aFloat) {
             this.aFloat = aFloat;
             return this;
         }
-        public Builder setByte(byte aByte){
+
+        public Builder setByte(byte aByte) {
             this.aByte = aByte;
             return this;
         }
-        public Builder setChar(char aChar){
+
+        public Builder setChar(char aChar) {
             this.aChar = aChar;
             return this;
         }
-        public Builder setBoolean(boolean aBoolean){
+
+        public Builder setBoolean(boolean aBoolean) {
             this.aBoolean = aBoolean;
             return this;
         }
-        public Builder setShort(short aShort){
+
+        public Builder setShort(short aShort) {
             this.aShort = aShort;
             return this;
         }
 
-        public AnyObject build(){
-            return new AnyObject(str,anInt, aLong, aDouble, aFloat, aByte, aChar, aBoolean, aShort);
+        public AnyObject build() {
+            return new AnyObject(str, anInt, aLong, aDouble, aFloat, aByte, aChar, aBoolean, aShort);
         }
     }
 }

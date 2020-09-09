@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class ConverterFactoryImpl implements ConverterFactory {
 
-    private final Map<ObjectType,Converter> typeConverterMap = new HashMap<>();
+    private final Map<ObjectType, Converter> typeConverterMap = new HashMap<>();
 
     @Override
     public Converter converterByClass(Class<?> clazz) {
-        return typeConverterMap.computeIfAbsent(ObjectType.getType(clazz),this::createType);
+        return typeConverterMap.computeIfAbsent(ObjectType.getType(clazz), this::createType);
     }
 
     private Converter createType(ObjectType type) {

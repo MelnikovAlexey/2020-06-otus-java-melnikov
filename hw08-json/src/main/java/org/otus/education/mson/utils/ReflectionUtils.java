@@ -18,11 +18,12 @@ public class ReflectionUtils {
         return Objects.nonNull(clazz) && clazz.isArray()
                 && ((clazz.getComponentType().isPrimitive()) || isPrimitiveArray(clazz.getComponentType()));
     }
-    public static  boolean isString(Class<?> clazz){
+
+    public static boolean isString(Class<?> clazz) {
         return clazz.equals(String.class);
     }
 
-    public static Object getFieldValue(Field field, Object object){
+    public static Object getFieldValue(Field field, Object object) {
         try {
             field.setAccessible(true);
             return field.get(object);
@@ -31,8 +32,8 @@ public class ReflectionUtils {
         }
     }
 
-    public static List<Field> getAllFields(Class<?> clazz){
-        if (Objects.nonNull(clazz)){
+    public static List<Field> getAllFields(Class<?> clazz) {
+        if (Objects.nonNull(clazz)) {
             List<Field> list = new ArrayList<>(Arrays.asList(clazz.getDeclaredFields()));
             list.addAll(getAllFields(clazz.getSuperclass()));
             return list;
