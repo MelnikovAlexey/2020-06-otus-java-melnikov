@@ -37,7 +37,7 @@ public class AppLauncher {
         System.out.println(gsonObject.toString());
 
 
-        System.out.println("Result comparison of the recreated from Mson String object with origin: " + msonRebuildAny.equals(origin));
-        System.out.println("Result comparison of the recreated from Mson object with recreated from Gson: " + msonRebuildAny.equals(gsonObject));
+        System.out.println("Result comparison Mson with Origin: " + msonRebuildAny.equals(origin));
+        System.out.println("Result comparison Mson with Gson: " + msonRebuildAny.equals(gsonObject));
     }
 }
