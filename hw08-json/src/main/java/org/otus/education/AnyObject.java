@@ -23,12 +23,11 @@ public class AnyObject {
 
     private final List<Integer> integerList = List.of(1, 1, 2);
     private final List<List<Double>> doublesMultiList = List.of(List.of(9.1, 1.1, 1.2), List.of(0.1, 0.2, 0.3));
-    private final List<int[][]> listOfMuliArray = new ArrayList<>();
-
+    private final List<int[][]> listOfMultiArray = new ArrayList<>();
     {
-        listOfMuliArray.add(null);
-        listOfMuliArray.add(new int[][]{{}, {}});
-        listOfMuliArray.add(null);
+        listOfMultiArray.add(null);
+        listOfMultiArray.add(new int[][]{{}, {}});
+        listOfMultiArray.add(null);
     }
 
     private AnyObject() {
@@ -137,7 +136,7 @@ public class AnyObject {
                 ", nullarray=" + Arrays.toString(nullArray) +
                 ", integers=" + integerList +
                 ", doublesMulti=" + doublesMultiList +
-                ", listOfArray=" + listOfMuliArray +
+                ", listOfArray=" + listOfMultiArray +
                 '}';
     }
 
@@ -162,13 +161,13 @@ public class AnyObject {
                 && Arrays.equals(nullArray, anyObject.nullArray)
                 && Objects.deepEquals(integerList, anyObject.integerList)
                 && Objects.deepEquals(doublesMultiList, anyObject.doublesMultiList)
-                && listOfMuliArray == anyObject.listOfMuliArray)
-                && !(anyObject.listOfMuliArray != null && Arrays.deepEquals(listOfMuliArray.toArray(), anyObject.listOfMuliArray.toArray())));
+                && listOfMultiArray == anyObject.listOfMultiArray)
+                && !(anyObject.listOfMultiArray != null && Arrays.deepEquals(listOfMultiArray.toArray(), anyObject.listOfMultiArray.toArray())));
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(str, anInt, aLong, aDouble, aFloat, aByte, aChar, aBoolean, aShort, integerList, doublesMultiList, listOfMuliArray);
+        int result = Objects.hash(str, anInt, aLong, aDouble, aFloat, aByte, aChar, aBoolean, aShort, integerList, doublesMultiList, listOfMultiArray);
         result = 31 * result + Arrays.hashCode(charArray);
         result = 31 * result + Arrays.hashCode(intArray);
         result = 31 * result + Arrays.hashCode(multiIntArray);
