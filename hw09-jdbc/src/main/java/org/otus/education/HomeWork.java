@@ -35,7 +35,6 @@ public class HomeWork {
         var dataSource = new DataSourceH2();
         flywayMigrations(dataSource);
         var sessionManager = new SessionManagerJdbc(dataSource);
-        //sessionManager.beginSession();
 
 // Работа с пользователем
         DbExecutor<User> dbExecutor = new DbExecutorImpl<>();
