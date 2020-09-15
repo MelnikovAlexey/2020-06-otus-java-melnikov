@@ -1,6 +1,5 @@
 package org.otus.education.jdbc.mapper.impl;
 
-import lombok.SneakyThrows;
 import org.otus.education.annotation.dbfield.Id;
 import org.otus.education.annotation.dbfield.IdAnnotationException;
 import org.otus.education.jdbc.mapper.EntityClassMetaData;
@@ -29,9 +28,14 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         this.fields.forEach(x->x.setAccessible(true));
     }
 
-    @SneakyThrows
+
     private Constructor<T> findConstructor(){
-        return  clazz.getDeclaredConstructor();
+        try {
+            return clazz.getDeclaredConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private Field findIdField(){
@@ -49,7 +53,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     @Override
     public String getName() {
-        return clazz.getName();
+        return clazz.getSimpleName();
     }
 
     @Override
