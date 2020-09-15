@@ -60,7 +60,7 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
 
     @Override
     public void insertOrUpdate(T objectData, Connection connection) {
-        Object id  = null;
+        Object id = null;
         try {
             id = entityClassMetaData.getIdField().get(objectData);
         } catch (IllegalAccessException e) {

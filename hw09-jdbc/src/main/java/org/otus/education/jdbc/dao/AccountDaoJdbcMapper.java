@@ -21,22 +21,22 @@ public class AccountDaoJdbcMapper implements AccountDao {
 
     @Override
     public Optional<Account> findByNo(long no) {
-        return mapper.findById(no,getConnection());
+        return mapper.findById(no, getConnection());
     }
 
     @Override
     public long insertAccount(Account account) {
-        return mapper.insert(account,getConnection());
+        return mapper.insert(account, getConnection());
     }
 
     @Override
     public void updateAccount(Account account) {
-        mapper.update(account,getConnection());
+        mapper.update(account, getConnection());
     }
 
     @Override
     public void insertOrUpdate(Account account) {
-        mapper.insertOrUpdate(account,getConnection());
+        mapper.insertOrUpdate(account, getConnection());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class AccountDaoJdbcMapper implements AccountDao {
         return sessionManager;
     }
 
-    private Connection getConnection(){
+    private Connection getConnection() {
         return sessionManager.getCurrentSession().getConnection();
     }
 }

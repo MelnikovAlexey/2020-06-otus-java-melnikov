@@ -8,8 +8,12 @@ import java.util.Optional;
 public interface AccountDao {
 
     Optional<Account> findByNo(long no);
+
     long insertAccount(Account account);
+
     void updateAccount(Account account);
+
     void insertOrUpdate(Account account);
+
     SessionManager getSessionManager();
 }

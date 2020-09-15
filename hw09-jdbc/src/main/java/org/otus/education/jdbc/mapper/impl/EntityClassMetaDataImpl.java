@@ -25,11 +25,11 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         this.idField = findIdField();
         this.fieldListWithOutId = fields.stream().filter(Predicate.not(idField::equals)).collect(Collectors.toUnmodifiableList());
         this.constructor.setAccessible(true);
-        this.fields.forEach(x->x.setAccessible(true));
+        this.fields.forEach(x -> x.setAccessible(true));
     }
 
 
-    private Constructor<T> findConstructor(){
+    private Constructor<T> findConstructor() {
         try {
             return clazz.getDeclaredConstructor();
         } catch (NoSuchMethodException e) {
@@ -38,15 +38,15 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         return null;
     }
 
-    private Field findIdField(){
+    private Field findIdField() {
         List<Field> idFieldList = fields.stream()
                 .filter(field -> field.isAnnotationPresent(Id.class))
                 .collect(Collectors.toList());
-        if (idFieldList.isEmpty()){
-            throw new IdAnnotationException("In class "+ clazz.getCanonicalName() +" annotation @Id not found");
+        if (idFieldList.isEmpty()) {
+            throw new IdAnnotationException("In class " + clazz.getCanonicalName() + " annotation @Id not found");
         }
-        if (idFieldList.size()>1){
-            throw new IdAnnotationException("In class "+ clazz.getCanonicalName() +"Annotation @Id found more than 1");
+        if (idFieldList.size() > 1) {
+            throw new IdAnnotationException("In class " + clazz.getCanonicalName() + "Annotation @Id found more than 1");
         }
         return idFieldList.get(0);
     }

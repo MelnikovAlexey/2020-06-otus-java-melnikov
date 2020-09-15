@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.util.Optional;
 
 
@@ -61,20 +60,20 @@ public class HomeWork {
                 new EntitySQLMetaDataImpl(accountEntityClassMetaData),
                 new DbExecutorImpl<>()
         );
-        AccountDao accountDao = new AccountDaoJdbcMapper(accountJdbcMapper,sessionManager);
+        AccountDao accountDao = new AccountDaoJdbcMapper(accountJdbcMapper, sessionManager);
         var dbServiceAccount = new DBServiceAccountImpl(accountDao);
-        var no = dbServiceAccount.createAccount(new Account(10,"NewAccount",BigDecimal.TEN));
+        var no = dbServiceAccount.createAccount(new Account(10, "NewAccount", BigDecimal.TEN));
         Optional<Account> accountOptional = dbServiceAccount.getAccount(no);
 
-        if (accountOptional.isPresent()){
+        if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             logger.info("created account, type:{}, rest:{}", account.getType(), account.getRest());
             account.setRest(BigDecimal.ONE);
             account.setType("NewNewAccount");
             dbServiceAccount.updateAccount(account);
-            logger.info("update account, no:{} type:{}, rest:{}",account.getNo(), account.getType(), account.getRest());
+            logger.info("update account, no:{} type:{}, rest:{}", account.getNo(), account.getType(), account.getRest());
 
-        }else {
+        } else {
             logger.info("account was not created");
         }
     }

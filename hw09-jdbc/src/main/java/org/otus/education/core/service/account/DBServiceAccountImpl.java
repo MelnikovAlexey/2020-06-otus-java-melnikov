@@ -2,7 +2,6 @@ package org.otus.education.core.service.account;
 
 import org.otus.education.core.dao.AccountDao;
 import org.otus.education.core.model.Account;
-import org.otus.education.core.service.DbServiceUserImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +18,15 @@ public class DBServiceAccountImpl implements DBServiceAccount {
 
     @Override
     public long createAccount(Account account) {
-        try(var sessionManager = accountDao.getSessionManager()){
+        try (var sessionManager = accountDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
                 var accountNo = accountDao.insertAccount(account);
                 sessionManager.commitSession();
 
-                logger.info("Create account: {}",accountNo);
+                logger.info("Create account: {}", accountNo);
                 return accountNo;
-            } catch (Exception e){
+            } catch (Exception e) {
                 sessionManager.rollbackSession();
                 throw new DbServiceAccountException(e.getMessage());
             }
@@ -37,14 +36,14 @@ public class DBServiceAccountImpl implements DBServiceAccount {
 
     @Override
     public Optional<Account> getAccount(long id) {
-        try(var sessionManager = accountDao.getSessionManager()) {
+        try (var sessionManager = accountDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
                 Optional<Account> accountOptional = accountDao.findByNo(id);
-                logger.info("Account: {}",accountOptional.orElse(null));
+                logger.info("Account: {}", accountOptional.orElse(null));
                 return accountOptional;
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 logger.error(e.getMessage());
                 sessionManager.rollbackSession();
             }
@@ -54,13 +53,13 @@ public class DBServiceAccountImpl implements DBServiceAccount {
 
     @Override
     public void updateAccount(Account account) {
-        try(var sessionManager = accountDao.getSessionManager()) {
+        try (var sessionManager = accountDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
                 accountDao.updateAccount(account);
                 sessionManager.commitSession();
-                logger.info("update account: {}",account);
-            }catch (Exception e){
+                logger.info("update account: {}", account);
+            } catch (Exception e) {
                 logger.error(e.getMessage());
                 sessionManager.rollbackSession();
             }

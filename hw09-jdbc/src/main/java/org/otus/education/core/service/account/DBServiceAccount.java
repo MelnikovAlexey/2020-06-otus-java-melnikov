@@ -6,7 +6,9 @@ import java.util.Optional;
 
 public interface DBServiceAccount {
     long createAccount(Account account);
+
     Optional<Account> getAccount(long id);
+
     void updateAccount(Account account);
 
 }
