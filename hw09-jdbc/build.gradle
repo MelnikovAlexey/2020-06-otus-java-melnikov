@@ -11,6 +11,7 @@ dependencies {
         implementation 'com.h2database:h2'
         implementation 'ch.qos.logback:logback-classic'
         implementation 'org.flywaydb:flyway-core'
+        compileOnly 'org.projectlombok:lombok'
     }
 }
 
