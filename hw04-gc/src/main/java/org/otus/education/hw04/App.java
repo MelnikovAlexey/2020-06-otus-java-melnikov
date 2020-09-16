@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+//-XX:+UseSerialGC
+//-XX:+UseParallelGC
+//-XX:+UseG1GC
+
 public class App {
     public static void main(String[] args) throws InterruptedException {
         final Map<String, Long> statistics = new HashMap<>();
