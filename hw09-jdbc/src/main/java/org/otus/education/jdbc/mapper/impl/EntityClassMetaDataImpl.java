@@ -3,6 +3,7 @@ package org.otus.education.jdbc.mapper.impl;
 import org.otus.education.annotation.dbfield.Id;
 import org.otus.education.annotation.dbfield.IdAnnotationException;
 import org.otus.education.jdbc.mapper.EntityClassMetaData;
+import org.otus.education.jdbc.exception.EntityClassMetaDataException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -21,21 +22,26 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     public EntityClassMetaDataImpl(Class<T> clazz) {
         this.clazz = clazz;
         this.constructor = findConstructor();
-        this.fields = List.of(clazz.getDeclaredFields());
+        this.fields=  getFieldList(clazz);
         this.idField = findIdField();
         this.fieldListWithOutId = fields.stream().filter(Predicate.not(idField::equals)).collect(Collectors.toUnmodifiableList());
-        this.constructor.setAccessible(true);
-        this.fields.forEach(x -> x.setAccessible(true));
+    }
+
+    private List<Field> getFieldList(Class<T> clazz) {
+        final List<Field> fields = List.of(clazz.getDeclaredFields());
+        fields.forEach(x -> x.setAccessible(true));
+        return fields;
     }
 
 
     private Constructor<T> findConstructor() {
         try {
-            return clazz.getDeclaredConstructor();
+            final Constructor<T> constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            return constructor;
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+           throw new EntityClassMetaDataException("Constructor not found");
         }
-        return null;
     }
 
     private Field findIdField() {

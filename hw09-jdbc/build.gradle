@@ -11,6 +11,10 @@ dependencies {
         implementation 'com.h2database:h2'
         implementation 'ch.qos.logback:logback-classic'
         implementation 'org.flywaydb:flyway-core'
+
+        testImplementation('org.junit.jupiter:junit-jupiter')
+        testImplementation('org.mockito:mockito-core')
+        testImplementation('org.mockito:mockito-junit-jupiter')
     }
 }
 
@@ -21,6 +25,9 @@ shadowJar {
     manifest {
         attributes 'Main-Class': 'org.otus.education.HomeWork'
     }
+}
+test {
+    useJUnitPlatform()
 }
 
 tasks.build.dependsOn tasks.shadowJar

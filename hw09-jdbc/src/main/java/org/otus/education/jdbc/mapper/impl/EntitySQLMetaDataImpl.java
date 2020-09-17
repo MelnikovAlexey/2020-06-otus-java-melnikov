@@ -48,8 +48,8 @@ public class EntitySQLMetaDataImpl implements EntitySQLMetaData {
                 id);
     }
 
-    private String generateParameterString(int size) {
-        return Stream.generate(() -> "?").limit(size).collect(Collectors.joining(", "));
+    public String generateParameterString(int size) {
+        return "? ".repeat(size).trim().replace(" ",", ");
     }
 
     @Override

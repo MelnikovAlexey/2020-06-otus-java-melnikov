@@ -1,6 +1,7 @@
 package org.otus.education.jdbc.mapper.impl;
 
 import org.otus.education.jdbc.DbExecutor;
+import org.otus.education.jdbc.exception.JdbcMapperException;
 import org.otus.education.jdbc.mapper.EntityClassMetaData;
 import org.otus.education.jdbc.mapper.EntitySQLMetaData;
 import org.otus.education.jdbc.mapper.JdbcMapper;
@@ -64,7 +65,7 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
         try {
             id = entityClassMetaData.getIdField().get(objectData);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw new JdbcMapperException("Can not access to field Id in class " + entityClassMetaData.getName());
         }
         if (findById(id, connection).isPresent()) {
             update(objectData, connection);
@@ -94,14 +95,19 @@ public class JdbcMapperImpl<T> implements JdbcMapper<T> {
                     String fieldName = field.getName();
                     try {
                         field.set(result, resultSet.getObject(fieldName));
-                    } catch (IllegalAccessException | SQLException e) {
+                    } catch (IllegalAccessException e) {
+                        throw new JdbcMapperException("Can not access to field " + fieldName + " in class" + entityClassMetaData.getName());
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 });
                 return result;
             }
-        } catch (SQLException | InstantiationException | IllegalAccessException | InvocationTargetException throwables) {
+        } catch (SQLException | InstantiationException | InvocationTargetException throwables) {
             throwables.printStackTrace();
+        }
+        catch (IllegalAccessException e){
+            throw new JdbcMapperException("Cannot create constructor for class " + entityClassMetaData.getName());
         }
         return null;
     }
