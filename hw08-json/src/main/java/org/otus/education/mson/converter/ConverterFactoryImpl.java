@@ -1,9 +1,6 @@
 package org.otus.education.mson.converter;
 
-import org.otus.education.mson.converter.impl.ArrayPrimitiveConverter;
-import org.otus.education.mson.converter.impl.CollectionConverter;
-import org.otus.education.mson.converter.impl.DefaultObjectConverter;
-import org.otus.education.mson.converter.impl.PrimitiveConverter;
+import org.otus.education.mson.converter.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +19,7 @@ public class ConverterFactoryImpl implements ConverterFactory {
             case PRIMITIVE, STRING -> new PrimitiveConverter();
             case ARRAY -> new ArrayPrimitiveConverter(this);
             case COLLECTION -> new CollectionConverter(this);
+            case OBJECT -> new ObjectConverter(this);
         };
     }
 

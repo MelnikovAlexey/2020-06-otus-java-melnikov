@@ -3,6 +3,7 @@ package org.otus.education.mson.converter.impl;
 import org.otus.education.mson.FieldResult;
 import org.otus.education.mson.converter.Converter;
 import org.otus.education.mson.converter.ConverterFactory;
+import org.otus.education.mson.utils.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -24,9 +25,12 @@ public class DefaultObjectConverter implements Converter {
     @Override
     public String convert(Object value) {
         if (Objects.nonNull(value)) {
+
             final List<Field> fieldList = getAllFields(value.getClass());
             return fieldList.stream()
-                    .map(field -> getFieldResult(value, field, factory.converterByClass(field.getType()))).filter(Objects::nonNull).map(FieldResult::toString)
+                    .map(field -> {
+                        return getFieldResult(value, field, factory.converterByClass(field.getType()));
+                    }).filter(Objects::nonNull).map(FieldResult::toString)
                     .collect(Collectors.joining(",", "{", "}"));
         }
         return null;

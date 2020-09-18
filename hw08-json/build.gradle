@@ -13,7 +13,13 @@ dependencies {
         implementation 'javax.json:javax.json-api'
         implementation 'org.glassfish:javax.json'
         implementation 'com.google.code.gson:gson'
+        testImplementation('org.junit.jupiter:junit-jupiter')
+        testImplementation('org.mockito:mockito-core')
+        testImplementation('org.mockito:mockito-junit-jupiter')
+}
 
+test {
+    useJUnitPlatform()
 }
 
 shadowJar {

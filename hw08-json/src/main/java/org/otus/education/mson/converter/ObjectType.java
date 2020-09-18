@@ -10,7 +10,8 @@ public enum ObjectType {
     PRIMITIVE(ReflectionUtils::isPrimitiveOrWrapper),
     ARRAY(ReflectionUtils::isPrimitiveArray),
     COLLECTION(Collection.class::isAssignableFrom),
-    STRING(ReflectionUtils::isString);
+    STRING(ReflectionUtils::isString),
+    OBJECT(aClass -> false);
 
     private final Predicate<Class<?>> classPredicate;
 
@@ -22,6 +23,6 @@ public enum ObjectType {
         for (ObjectType type : values()) {
             if (type.classPredicate.test(aClass)) return type;
         }
-        throw new ClassNotSupportedException(String.format("Class %s not supported", aClass));
+        return OBJECT;
     }
 }
