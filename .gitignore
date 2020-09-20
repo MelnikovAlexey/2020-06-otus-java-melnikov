@@ -33,3 +33,5 @@ build
 *.iws
 *.ipr
 *.idea
+/logs/
+/logs/dump/
