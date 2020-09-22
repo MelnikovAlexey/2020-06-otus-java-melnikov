@@ -7,4 +7,5 @@ include 'hw07-pattern'
 include 'hw06-solid'
 include 'hw09-jdbc'
 include 'hw10-hibernate'
+include 'hw11-cache'
 
