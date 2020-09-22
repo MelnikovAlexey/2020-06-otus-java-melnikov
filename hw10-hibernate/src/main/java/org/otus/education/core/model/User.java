@@ -83,9 +83,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", addressDataSet=" + addressDataSet +
-                ", phoneDataSets=" + phoneDataSets.stream()
-                .map(PhoneDataSet::toString)
-                .collect(Collectors.joining(",", "[", "]")) +
+                ", phoneDataSets=" + phoneDataSets +
                 '}';
     }
 }
