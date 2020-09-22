@@ -1,15 +1,27 @@
 package org.otus.education.core.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "phones")
 public class PhoneDataSet {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "phones_seq")
+    @SequenceGenerator(name = "phones_seq",
+            sequenceName = "SEQ_PHONE")
+    @Column(name = "id")
     private long id;
+
     private String number;
+
+    @ManyToOne
     private User user;
 
     public PhoneDataSet() {
     }
 
-    public PhoneDataSet(long id, String number) {
-        this.id = id;
+    public PhoneDataSet(String number) {
         this.number = number;
     }
 
@@ -35,5 +47,13 @@ public class PhoneDataSet {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "PhoneDataSet{" +
+                "id=" + id +
+                ", number='" + number +
+                '}';
     }
 }

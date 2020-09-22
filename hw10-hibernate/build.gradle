@@ -19,11 +19,11 @@ dependencies {
 }
 
 shadowJar {
-    archiveBaseName.set('hw10-gradle-jpql-uber')
+    archiveBaseName.set('hw10-gradle-hibernate-uber')
     archiveVersion.set('1.0')
     archiveClassifier.set('')
     manifest {
-        attributes 'Main-Class': 'org.otus.org.otus.education.HomeWork'
+        attributes 'Main-Class': 'org.otus.org.otus.education.HibernateHomeWork'
     }
 }
 test {
