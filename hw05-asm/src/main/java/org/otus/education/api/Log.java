@@ -1,4 +1,4 @@
-package org.otus.education.asm.api;
+package org.otus.education.api;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,4 @@ import java.lang.annotation.Target;
 @Target(value = ElementType.METHOD)
 public @interface Log {
 
-    String comment() default "";
-
-    boolean printProperty() default true;
 }
