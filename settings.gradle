@@ -7,3 +7,5 @@ include 'hw07-pattern'
 include 'hw06-solid'
 include 'hw08-json'
 include 'hw09-jdbc'
+include 'hw10-hibernate'
+
