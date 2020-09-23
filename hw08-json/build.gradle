@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'com.github.johnrengelman.shadow'
+}
+
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14
+
+dependencies {
+        implementation 'com.google.guava:guava'
+        implementation 'com.fasterxml.jackson.core:jackson-databind'
+        implementation 'javax.json:javax.json-api'
+        implementation 'org.glassfish:javax.json'
+        implementation 'com.google.code.gson:gson'
+        testImplementation('org.junit.jupiter:junit-jupiter')
+        testImplementation('org.mockito:mockito-core')
+        testImplementation('org.mockito:mockito-junit-jupiter')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    archiveBaseName.set('hw08-gradle-json-uber')
+    archiveVersion.set('1.0')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'org.otus.education.Main'
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
