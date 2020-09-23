@@ -24,7 +24,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void put(K key, V value) {
-        hashMap.putIfAbsent(key, value);
+        hashMap.put(key, value);
         notify(key,"put");
     }
 
@@ -36,7 +36,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public V get(K key) {
-        V v = hashMap.getOrDefault(key,null);
+        V v = hashMap.get(key);
         notify(key,"get");
         return v;
     }
@@ -48,9 +48,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void removeListener(HwListener<K, V> listener) {
-        if (listenerList.contains(listener)){
-            listenerList.remove(listener);
-        }
+        listenerList.remove(listener);
     }
 
     @Override
