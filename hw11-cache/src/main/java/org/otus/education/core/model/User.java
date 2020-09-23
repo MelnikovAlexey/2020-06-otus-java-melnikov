@@ -25,7 +25,7 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private AddressDataSet addressDataSet;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PhoneDataSet> phoneDataSets;
 
     public User() {
