@@ -33,6 +33,7 @@ public class AppCacheLauncher {
         HwCache<Long,User> cache = new MyCache<>(5);
         HwListener<Long,User> listener = getHwListener();
         cache.addListener(listener);
+
         DBServiceUser dbServiceUser = new DbServiceUserWithCache(userDao,cache);
         final long start = getStart(dbServiceUser);
         logger.info("Get from cache: {}",(System.currentTimeMillis() - start));
@@ -40,7 +41,6 @@ public class AppCacheLauncher {
 
         final long start2 = getStart(new DbServiceUserImpl(userDao));
         logger.info("Get from db: {}",(System.currentTimeMillis() - start2));
-
 
     }
 
@@ -53,11 +53,10 @@ public class AppCacheLauncher {
                 new PhoneDataSet("87654321")
         ));
 
-        final long start = System.currentTimeMillis();
-
         var id = dbServiceUser.saveUser(user);
+        final long start = System.currentTimeMillis();
         dbServiceUser.getUser(id).ifPresentOrElse(
-                crUser -> logger.info("user created, {}", crUser.toString()),
+                crUser -> logger.info("user created, {}", crUser),
                 () -> logger.info("user didn't create")
         );
         return start;
@@ -68,7 +67,7 @@ public class AppCacheLauncher {
         return new HwListener<Long,User>() {
             @Override
             public void notify(Long key, User value, String action) {
-                logger.info("key:{}, value:{}, action: {}", key, value.toString(), action);
+                logger.info("key:{}, value:{}, action: {}", key, value, action);
             }
         };
     }
