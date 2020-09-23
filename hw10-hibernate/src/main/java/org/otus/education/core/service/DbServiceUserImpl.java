@@ -23,8 +23,6 @@ public class DbServiceUserImpl implements DBServiceUser {
             try {
                 var userId = userDao.insertUser(user);
                 sessionManager.commitSession();
-
-                logger.info("created user: {}", userId);
                 return userId;
             } catch (Exception e) {
                 sessionManager.rollbackSession();
@@ -38,10 +36,7 @@ public class DbServiceUserImpl implements DBServiceUser {
         try (var sessionManager = userDao.getSessionManager()) {
             sessionManager.beginSession();
             try {
-                Optional<User> userOptional = userDao.findById(id);
-
-                logger.info("user: {}", userOptional.orElse(null));
-                return userOptional;
+                return userDao.findById(id);
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
                 sessionManager.rollbackSession();
