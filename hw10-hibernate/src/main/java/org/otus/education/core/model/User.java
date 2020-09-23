@@ -2,7 +2,6 @@ package org.otus.education.core.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author sergey
@@ -25,7 +24,7 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     private AddressDataSet addressDataSet;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PhoneDataSet> phoneDataSets;
 
     public User() {
