@@ -34,7 +34,7 @@ public class AppCacheLauncher {
         HwListener<Long,User> listener = getHwListener();
         cache.addListener(listener);
 
-        DBServiceUser dbServiceUser = new DbServiceUserWithCache(userDao,cache);
+        DBServiceUser dbServiceUser = new DbServiceUserWithCache(new DbServiceUserImpl(userDao),cache);
         final long start = getStart(dbServiceUser);
         logger.info("Get from cache: {}",(System.currentTimeMillis() - start));
         cache.removeListener(listener);
