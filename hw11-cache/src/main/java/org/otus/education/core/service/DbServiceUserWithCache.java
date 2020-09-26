@@ -10,10 +10,6 @@ public class DbServiceUserWithCache extends DbServiceUserImpl {
 
     private  HwCache<Long,User> cache;
 
-    private DbServiceUserWithCache(UserDao userDao) {
-        super(userDao);
-    }
-
     public DbServiceUserWithCache(UserDao userDao, HwCache<Long, User> cache) {
         super(userDao);
         this.cache = cache;
@@ -32,6 +28,8 @@ public class DbServiceUserWithCache extends DbServiceUserImpl {
         if (optional.isPresent()){
             return optional;
         }
-        return super.getUser(id);
+        optional = super.getUser(id);
+        optional.ifPresent(user -> cache.put(id, user));
+        return optional;
     }
 }
