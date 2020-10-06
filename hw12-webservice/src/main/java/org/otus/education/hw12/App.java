@@ -42,7 +42,7 @@ public class App {
             var templateProcessor = new TemplateProcessorImpl(TEMPLATE_DIRECTORY);
             var loginService = new LoginByDBServiceUser(dbServiceUser);
 
-            var usersWebServer = new  UsersWebServerWithBasicSecurity
+            var usersWebServer = new UsersWebServerWithBasicSecurity
                     .Builder()
                     .setServer(WEB_SERVER_PORT)
                     .setLoginService(loginService)
