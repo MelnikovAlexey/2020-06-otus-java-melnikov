@@ -1,14 +1,19 @@
 package org.otus.education.data.core.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * @author sergey
  * created on 03.02.19.
  */
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = {
+        @Index(name = "IDX_USERS_LOGIN", columnList = "login", unique = true)
+})
+@NamedQueries({
+        @NamedQuery(name = "get_user_by_login", query = "select u from User as u where login =:login"),
+        @NamedQuery(name = "get_all_users", query = "select u from User as u")
+})
 public class User {
 
     @Id
@@ -21,23 +26,20 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private AddressDataSet addressDataSet;
+    @Column(name = "login")
+    private String login;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<PhoneDataSet> phoneDataSets;
+    @Column(name = "password")
+    private String password;
 
-    public User() {
-
+    private User() {
     }
 
-    public User(String name, AddressDataSet addressDataSet, List<PhoneDataSet> phoneDataSets) {
+    public User(String name, String login, String password) {
         this.name = name;
-        this.addressDataSet = addressDataSet;
-        this.phoneDataSets = phoneDataSets;
-        updateUserInPhones(this.phoneDataSets);
+        this.login = login;
+        this.password = password;
     }
-
 
     public long getId() {
         return id;
@@ -55,34 +57,24 @@ public class User {
         this.name = name;
     }
 
-    public AddressDataSet getAddressDataSet() {
-        return addressDataSet;
+    public String getLogin() {
+        return login;
     }
 
-    public void setAddressDataSet(AddressDataSet addressDataSet) {
-        this.addressDataSet = addressDataSet;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public List<PhoneDataSet> getPhoneDataSets() {
-        return phoneDataSets;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPhoneDataSets(List<PhoneDataSet> phoneDataSets) {
-        this.phoneDataSets = phoneDataSets;
-        updateUserInPhones(this.phoneDataSets);
-    }
-
-    private void updateUserInPhones(List<PhoneDataSet> phoneDataSet) {
-        phoneDataSet.forEach(x -> x.setUser(this));
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", addressDataSet=" + addressDataSet +
-                ", phoneDataSets=" + phoneDataSets +
-                '}';
+        return super.toString();
     }
 }

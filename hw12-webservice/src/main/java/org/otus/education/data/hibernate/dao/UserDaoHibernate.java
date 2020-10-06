@@ -11,6 +11,7 @@ import org.otus.education.data.hibernate.sessionmanager.SessionManagerHibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserDaoHibernate implements UserDao {
@@ -81,5 +82,35 @@ public class UserDaoHibernate implements UserDao {
     @Override
     public SessionManager getSessionManager() {
         return sessionManager;
+    }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+        try {
+            return Optional.ofNullable(currentSession
+                    .getHibernateSession()
+                    .createNamedQuery("get_user_by_login", User.class)
+                    .setParameter("login", login)
+                    .getSingleResult());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<User> getUsers() {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+        try {
+            return currentSession
+                    .getHibernateSession()
+                    .createNamedQuery("get_all_users", User.class)
+                    .getResultList();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return List.of();
     }
 }

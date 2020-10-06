@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 public final class HibernateUtils {
@@ -15,7 +16,7 @@ public final class HibernateUtils {
     }
 
     public static SessionFactory buildSessionFactory(String configResourceFileName,
-                                                     Class<?>... annotatedClasses) {
+                                                     DataSource dataSource, Class<?>... annotatedClasses) {
         Configuration configuration = new Configuration().configure(configResourceFileName);
         MetadataSources metadataSources = new MetadataSources(createServiceRegistry(configuration));
         Arrays.stream(annotatedClasses).forEach(metadataSources::addAnnotatedClass);
