@@ -10,9 +10,12 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.security.Constraint;
 import org.otus.education.data.core.service.DBServiceUser;
 import org.otus.education.web.services.TemplateProcessor;
+import org.otus.education.web.servlet.UsersApiServlet;
+import org.otus.education.web.servlet.UsersServlet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +26,7 @@ public class UsersWebServerWithBasicSecurity implements UsersWebServer {
     private static final String CONSTRAINT_NAME = "auth";
 
     private static final String START_PAGE_NAME = "index.html";
-    private static final String COMMON_RESOURCES_DIR = UsersWebServerWithBasicSecurity.class.getResource("/html/static").toExternalForm();
+    private static final String COMMON_RESOURCES_DIR = UsersWebServerWithBasicSecurity.class.getResource("/static").toExternalForm();
     private static final String USERS = "/users";
     private static final String USERS_API = "/api/user/*";
 
@@ -35,7 +38,7 @@ public class UsersWebServerWithBasicSecurity implements UsersWebServer {
     private final Server server;
 
 
-    private UsersWebServerWithBasicSecurity(Server server,
+    public UsersWebServerWithBasicSecurity(Server server,
                                             LoginService loginService,
                                             DBServiceUser dbServiceUser,
                                             Gson gson,
@@ -110,6 +113,8 @@ public class UsersWebServerWithBasicSecurity implements UsersWebServer {
 
     private ServletContextHandler createServletContextHandler() {
         var servletContextHandler = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+        servletContextHandler.addServlet(new ServletHolder(new UsersServlet(templateProcessor)), USERS);
+        servletContextHandler.addServlet(new ServletHolder(new UsersApiServlet(dbServiceUser, gson)), USERS_API);
 
         return servletContextHandler;
     }

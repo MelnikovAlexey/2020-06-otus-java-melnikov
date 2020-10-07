@@ -11,15 +11,15 @@ import javax.persistence.*;
         @Index(name = "IDX_USERS_LOGIN", columnList = "login", unique = true)
 })
 @NamedQueries({
-        @NamedQuery(name = "get_user_by_login", query = "select u from User as u where login =:login"),
-        @NamedQuery(name = "get_all_users", query = "select u from User as u")
+        @NamedQuery(name = "get_user_by_login", query = "select u from User u where login = :login"),
+        @NamedQuery(name = "get_all_users", query = "select u from User u")
 })
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
     @SequenceGenerator(name = "users_seq",
-            sequenceName = "SEQ_USER")
+            sequenceName = "users_sequence", allocationSize = 1)
     @Column(name = "id")
     private long id;
 
@@ -36,6 +36,13 @@ public class User {
     }
 
     public User(String name, String login, String password) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+    }
+
+    public User(long id, String name, String login, String password) {
+        this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;

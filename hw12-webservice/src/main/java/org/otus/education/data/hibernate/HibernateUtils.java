@@ -5,6 +5,7 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
 import javax.sql.DataSource;
@@ -18,6 +19,10 @@ public final class HibernateUtils {
     public static SessionFactory buildSessionFactory(String configResourceFileName,
                                                      DataSource dataSource, Class<?>... annotatedClasses) {
         Configuration configuration = new Configuration().configure(configResourceFileName);
+        if (dataSource != null) {
+            configuration.getProperties().put(AvailableSettings.DATASOURCE, dataSource);
+        }
+
         MetadataSources metadataSources = new MetadataSources(createServiceRegistry(configuration));
         Arrays.stream(annotatedClasses).forEach(metadataSources::addAnnotatedClass);
 

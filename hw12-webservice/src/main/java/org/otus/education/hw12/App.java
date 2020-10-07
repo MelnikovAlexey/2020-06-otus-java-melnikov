@@ -25,7 +25,7 @@ public class App {
 
     private static final String HIBERNATE_CONFIG = "hibernate.cfg.xml";
     private static final int WEB_SERVER_PORT = 8080;
-    private static final String TEMPLATE_DIRECTORY = "/html/templates/";
+    private static final String TEMPLATE_DIRECTORY = "/templates/";
     private static final String DB_USER = "sa";
     private static final String DB_PASS = "sa";
     private static final String DB_URI = "jdbc:h2:mem:OtusExamplesDB;DB_CLOSE_DELAY=-1";

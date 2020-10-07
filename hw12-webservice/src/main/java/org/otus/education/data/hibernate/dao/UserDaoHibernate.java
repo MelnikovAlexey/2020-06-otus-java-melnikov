@@ -88,11 +88,12 @@ public class UserDaoHibernate implements UserDao {
     public Optional<User> findByLogin(String login) {
         DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
         try {
-            return Optional.ofNullable(currentSession
+            Optional<User> singleResult = Optional.ofNullable(currentSession
                     .getHibernateSession()
-                    .createNamedQuery("get_user_by_login", User.class)
+                    .createQuery("select u from User u where login =:login", User.class)
                     .setParameter("login", login)
                     .getSingleResult());
+            return singleResult;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
