@@ -42,15 +42,11 @@ public class App {
             var templateProcessor = new TemplateProcessorImpl(TEMPLATE_DIRECTORY);
             var loginService = new LoginByDBServiceUser(dbServiceUser);
 
-            var usersWebServer = new UsersWebServerWithBasicSecurity
-                    .Builder()
-                    .setServer(WEB_SERVER_PORT)
-                    .setLoginService(loginService)
-                    .setDBServiceUser(dbServiceUser)
-                    .setGson(gson)
-                    .setTemplateProcessor(templateProcessor)
-                    .build();
-
+            var usersWebServer = new UsersWebServerWithBasicSecurity(WEB_SERVER_PORT,
+                    loginService,
+                    dbServiceUser,
+                    gson,
+                    templateProcessor);
 
             usersWebServer.start();
             usersWebServer.join();

@@ -38,16 +38,12 @@ public class UsersWebServerWithBasicSecurity implements UsersWebServer {
     private final Server server;
 
 
-    private UsersWebServerWithBasicSecurity(Server server,
-                                           LoginService loginService,
-                                           DBServiceUser dbServiceUser,
-                                           Gson gson,
-                                           TemplateProcessor templateProcessor) {
-        this.server = server;
+    public UsersWebServerWithBasicSecurity(int port, LoginService loginService, DBServiceUser dbServiceUser, Gson gson, TemplateProcessor templateProcessor) {
+        this.loginService = loginService;
         this.dbServiceUser = dbServiceUser;
         this.gson = gson;
         this.templateProcessor = templateProcessor;
-        this.loginService = loginService;
+        this.server = new Server(port);
     }
 
     protected Handler applySecurity(ServletContextHandler servletContextHandler, String... paths) {
@@ -117,46 +113,5 @@ public class UsersWebServerWithBasicSecurity implements UsersWebServer {
         servletContextHandler.addServlet(new ServletHolder(new UsersApiServlet(dbServiceUser, gson)), USERS_API);
 
         return servletContextHandler;
-    }
-
-    public static class Builder {
-        private LoginService loginService;
-        private Gson gson;
-        private DBServiceUser dbServiceUser;
-        private TemplateProcessor templateProcessor;
-        private Server server;
-
-        public Builder() {
-        }
-
-        public Builder setLoginService(LoginService loginService) {
-            this.loginService = loginService;
-            return this;
-        }
-
-        public Builder setGson(Gson gson) {
-            this.gson = gson;
-            return this;
-        }
-
-        public Builder setDBServiceUser(DBServiceUser dbServiceUser) {
-            this.dbServiceUser = dbServiceUser;
-            return this;
-        }
-
-        public Builder setTemplateProcessor(TemplateProcessor templateProcessor) {
-            this.templateProcessor = templateProcessor;
-            return this;
-        }
-
-        public Builder setServer(int port) {
-            this.server = new Server(port);
-            return this;
-        }
-
-        public UsersWebServerWithBasicSecurity build() {
-            return new UsersWebServerWithBasicSecurity(server, loginService, dbServiceUser, gson, templateProcessor);
-        }
-
     }
 }
