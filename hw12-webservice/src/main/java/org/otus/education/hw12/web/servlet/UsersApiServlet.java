@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class UsersApiServlet extends HttpServlet {
 
@@ -49,6 +50,21 @@ public class UsersApiServlet extends HttpServlet {
         try {
             if (req.getPathInfo() == null || "/".equals(req.getPathInfo())) {
                 dbServiceUser.saveUser(gson.fromJson(req.getReader(), User.class));
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (JsonParseException e) {
+            logger.error(e.getMessage(), e);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            if (req.getPathInfo() == null || req.getPathInfo().startsWith("/")) {
+                long id = Long.parseLong(Objects.requireNonNull(req.getPathInfo()).substring(1));
+                dbServiceUser.removeUserById(id);
             } else {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             }

@@ -28,6 +28,15 @@
                 .catch(e => printAddError(e));
         }
 
+
+        function removeUser(){
+            const id = document.getElementById("removeUser").value;
+            fetch('api/user/'+ id,{
+                method: 'DELETE',
+            }).then(response=>{updateUsersTable()}
+            )
+        }
+
         function updateUsersTable() {
             const usersTable = document.getElementById('usersTable');
             usersTable.innerHTML = ''
@@ -122,5 +131,17 @@
     <tbody id="usersTable">
     </tbody>
 </table>
+
+
+<h4>Удаление пользователя</h4>
+<table width="400px">
+    <tbody>
+    <tr>
+        <td>Идентификатор пользователя</td>
+        <td><input id="removeUser" width="50px" placeholder="Id Пользователя" type="number" min="0" step="1" /></td>
+    </tr>
+    </tbody>
+</table>
+<button onclick="removeUser()">Удалить</button>
 </body>
 </html>

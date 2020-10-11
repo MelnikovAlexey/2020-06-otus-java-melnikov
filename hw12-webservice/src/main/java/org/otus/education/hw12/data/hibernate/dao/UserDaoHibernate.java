@@ -113,4 +113,20 @@ public class UserDaoHibernate implements UserDao {
 
         return List.of();
     }
+
+    @Override
+    public boolean removeUserById(long id) {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+
+        try {
+            Session hibernateSession = currentSession.getHibernateSession();
+            hibernateSession.createQuery("delete from User u where u.id =:id").setParameter("id",id).executeUpdate();
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new UserDaoException(e);
+        }
+
+        return true;
+    }
 }

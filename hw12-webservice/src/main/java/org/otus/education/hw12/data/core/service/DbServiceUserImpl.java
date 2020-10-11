@@ -73,4 +73,17 @@ public class DbServiceUserImpl implements DBServiceUser {
             return List.of();
         }
     }
+
+    @Override
+    public void removeUserById(long id) {
+        try (var sessionManager = userDao.getSessionManager()) {
+            sessionManager.beginSession();
+            try {
+                userDao.removeUserById(id);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+                sessionManager.rollbackSession();
+            }
+        }
+    }
 }

@@ -20,4 +20,6 @@ public interface UserDao {
     Optional<User> findByLogin(String login);
 
     List<User> getUsers();
+
+    boolean removeUserById(long id);
 }
