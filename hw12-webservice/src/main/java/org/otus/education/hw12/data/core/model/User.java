@@ -32,6 +32,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "role")
+    private String role;
+
     private User() {
     }
 
@@ -39,6 +42,7 @@ public class User {
         this.name = name;
         this.login = login;
         this.password = password;
+        this.role = "user";
     }
 
     public User(long id, String name, String login, String password) {
@@ -46,6 +50,13 @@ public class User {
         this.name = name;
         this.login = login;
         this.password = password;
+    }
+
+    public User(String name, String login, String password, String role) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
 
     public long getId() {
@@ -78,6 +89,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

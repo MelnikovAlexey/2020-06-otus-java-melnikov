@@ -9,9 +9,10 @@ import org.otus.education.hw12.data.core.service.DbServiceUserImpl;
 import org.otus.education.hw12.data.hibernate.HibernateUtils;
 import org.otus.education.hw12.data.hibernate.dao.UserDaoHibernate;
 import org.otus.education.hw12.data.hibernate.sessionmanager.SessionManagerHibernate;
-import org.otus.education.hw12.web.server.UsersWebServerWithBasicSecurity;
-import org.otus.education.hw12.web.services.LoginByDBServiceUser;
+import org.otus.education.hw12.web.server.UsersWebServerWithFilterBasedSecurity;
 import org.otus.education.hw12.web.services.TemplateProcessorImpl;
+import org.otus.education.hw12.web.services.UserAuthService;
+import org.otus.education.hw12.web.services.UserAuthServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,13 +41,10 @@ public class App {
 
             Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
             var templateProcessor = new TemplateProcessorImpl(TEMPLATE_DIRECTORY);
-            var loginService = new LoginByDBServiceUser(dbServiceUser);
+            UserAuthService userAuthService = new UserAuthServiceImpl(dbServiceUser);
 
-            var usersWebServer = new UsersWebServerWithBasicSecurity(WEB_SERVER_PORT,
-                    loginService,
-                    dbServiceUser,
-                    gson,
-                    templateProcessor);
+            UsersWebServerWithFilterBasedSecurity usersWebServer = new UsersWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
+                    userAuthService, gson, dbServiceUser, templateProcessor);
 
             usersWebServer.start();
             usersWebServer.join();
