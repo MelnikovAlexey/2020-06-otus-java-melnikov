@@ -1,7 +1,6 @@
 package org.otus.education.hw13.services;
 
 
-
 import org.otus.education.hw13.model.DivisionEquation;
 import org.otus.education.hw13.model.Equation;
 import org.otus.education.hw13.model.MultiplicationEquation;

@@ -110,11 +110,11 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     @Override
     @SuppressWarnings("unchecked")
     public <C> C getAppComponent(String componentName) {
-        if (Objects.isNull(componentName)){
+        if (Objects.isNull(componentName)) {
             throw new IllegalArgumentException("componentName can not be null");
         }
         C component = (C) appComponentsByName.get(componentName);
-        if (Objects.isNull(component)){
+        if (Objects.isNull(component)) {
             throw new AppComponentsContainerException(String.format("Component '%s' not found in context", componentName));
         }
         return component;
