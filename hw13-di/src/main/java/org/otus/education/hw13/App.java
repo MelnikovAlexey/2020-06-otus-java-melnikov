@@ -1,37 +1,37 @@
 package org.otus.education.hw13;
 
-
-
-/*
-В классе AppComponentsContainerImpl реализовать обработку, полученной в конструкторе конфигурации,
-основываясь на разметке аннотациями из пакета appcontainer. Так же необходимо реализовать методы getAppComponent.
-В итоге должно получиться работающее приложение. Менять можно только класс AppComponentsContainerImpl.
-
-PS Приложение представляет из себя тренажер таблицы умножения)
-*/
-
 import org.otus.education.hw13.appcontainer.AppComponentsContainerImpl;
 import org.otus.education.hw13.appcontainer.api.AppComponentsContainer;
 import org.otus.education.hw13.config.AppConfig;
 import org.otus.education.hw13.services.GameProcessor;
+import org.otus.education.hw13.services.GameProcessorImpl;
+
+import java.util.Scanner;
 
 public class App {
 
-    public static void main(String[] args) throws Exception {
-        // Опциональные варианты
-        //AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig1.class, AppConfig2.class);
-
-        // Тут можно использовать библиотеку Reflections (см. зависимости)
-        //AppComponentsContainer container = new AppComponentsContainerImpl("ru.otus.config");
-
-        // Обязательный вариант
-        AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig.class);
-
-        // Приложение должно работать в каждом из указанных ниже вариантов
-        GameProcessor gameProcessor = container.getAppComponent(GameProcessor.class);
-        //GameProcessor gameProcessor = container.getAppComponent(GameProcessorImpl.class);
-        //GameProcessor gameProcessor = container.getAppComponent("gameProcessor");
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("How to start GameProcessor:");
+        System.out.println("1 - interface  (GameProcessor.class (default))");
+        System.out.println("2 - implementation class (GameProcessorImpl.class)");
+        System.out.println("3 - component name (  \"gameProcessor\")");
+        System.out.print("");
+        GameProcessor gameProcessor = initGame(scanner.next());
 
         gameProcessor.startGame();
+    }
+
+    private static GameProcessor initGame(String value) {
+        AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig.class);
+        switch (value) {
+            default:
+            case "1":
+                return container.getAppComponent(GameProcessor.class);
+            case "2":
+                return container.getAppComponent(GameProcessorImpl.class);
+            case "3":
+                return container.getAppComponent("gameProcessor");
+        }
     }
 }
