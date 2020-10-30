@@ -21,36 +21,38 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     private void processConfig(Class<?> configClass) {
-        try {
-            checkConfigClass(configClass);
-            final Object instance = initInstance(configClass);
-            final List<Method> methodList = Arrays.asList(configClass.getDeclaredMethods());
-            List<Method> orderedMethodList = methodList.stream()
-                    .filter(f -> f.isAnnotationPresent(AppComponent.class))
-                    .sorted(Comparator.comparingInt(c -> c.getAnnotation(AppComponent.class).order()))
-                    .collect(Collectors.toList());
-            for (Method method : orderedMethodList) {
-                final AppComponent componentInfo = method.getAnnotation(AppComponent.class);
-                checkContext(componentInfo.name());
-                try {
-                    method.setAccessible(true);
-                    Object component = method.invoke(instance, getMethodArguments(method));
-                    appComponents.add(component);
-                    appComponentsByName.put(componentInfo.name(), component);
-                } catch (Exception e) {
-                    throw new AppComponentsContainerException(String.format("Cannot create component '%s'", componentInfo.name()), e);
-                }
+        checkConfigClass(configClass);
+        final Object instance = initInstance(configClass);
+        List<Method> orderedMethodList = getMethods(configClass);
+        initComponent(instance, orderedMethodList);
+    }
+
+    private void initComponent(Object instance, List<Method> orderedMethodList) {
+        for (Method method : orderedMethodList) {
+            final AppComponent componentInfo = method.getAnnotation(AppComponent.class);
+            checkContext(componentInfo.name());
+            try {
+                method.setAccessible(true);
+                Object component = method.invoke(instance, getMethodArguments(method));
+                appComponents.add(component);
+                appComponentsByName.put(componentInfo.name(), component);
+            } catch (Exception e) {
+                throw new AppComponentsContainerException(String.format("Cannot create component '%s'", componentInfo.name()), e);
             }
-        } catch (Exception e) {
-            appComponentsByName.clear();
-            appComponents.clear();
-            throw e;
         }
+    }
+
+    private List<Method> getMethods(Class<?> configClass) {
+        final List<Method> methodList = Arrays.asList(configClass.getDeclaredMethods());
+        return methodList.stream()
+                .filter(f -> f.isAnnotationPresent(AppComponent.class))
+                .sorted(Comparator.comparingInt(c -> c.getAnnotation(AppComponent.class).order()))
+                .collect(Collectors.toList());
     }
 
     private Object[] getMethodArguments(Method method) {
         if (method.getParameterCount() == 0) {
-            return null;
+            return new Object[0];
         }
         Object[] args = new Object[method.getParameterCount()];
         Parameter[] parameters = method.getParameters();
@@ -102,8 +104,6 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         if (componentsList.size() > 1) {
             throw new AppComponentsContainerException(String.format("Found more 1 component '%s' in context", componentClass.getCanonicalName()));
         }
-
-
         return (C) componentsList.get(0);
     }
 
