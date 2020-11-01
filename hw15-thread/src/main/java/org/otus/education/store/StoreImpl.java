@@ -34,7 +34,7 @@ public class StoreImpl implements Store {
                 logger.info("First print: {}", number);
                 stopper.set(true);
                 sleep();
-                notify();
+                notifyAll();
             }
             changer.set(false);
             limit--;
