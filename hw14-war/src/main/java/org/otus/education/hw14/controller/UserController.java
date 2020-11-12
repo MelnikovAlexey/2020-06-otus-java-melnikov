@@ -1,5 +1,6 @@
 package org.otus.education.hw14.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 public class UserController {
 
@@ -35,6 +37,7 @@ public class UserController {
 
     @PostMapping("/save")
     public RedirectView userSave(@ModelAttribute User user) {
+        log.debug("INFORMATION"+user.getLogin());
         dbServiceUser.saveUser(user);
         return new RedirectView("/users", true);
     }
