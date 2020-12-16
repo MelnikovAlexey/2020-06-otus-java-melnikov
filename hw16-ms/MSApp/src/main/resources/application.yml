@@ -1,0 +1,5 @@
+#
+flyway:
+  scripts:
+hibernate:
+  config: /hibernate.cfg.xml

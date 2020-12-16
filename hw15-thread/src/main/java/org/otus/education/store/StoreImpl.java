@@ -1,12 +1,14 @@
 package org.otus.education.store;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Slf4j
 public class StoreImpl implements Store {
-    private static final Logger logger = LoggerFactory.getLogger(StoreImpl.class);
+  //  private static final Logger logger = LoggerFactory.getLogger(StoreImpl.class);
     private final AtomicBoolean stopper = new AtomicBoolean(false);
     private final AtomicBoolean changer = new AtomicBoolean(true);
     private int number = 0;
@@ -31,7 +33,7 @@ public class StoreImpl implements Store {
                 } else {
                     number--;
                 }
-                logger.info("First print: {}", number);
+                log.info("First print: {}", number);
                 stopper.set(true);
                 sleep();
                 notifyAll();
@@ -51,7 +53,7 @@ public class StoreImpl implements Store {
                     } catch (InterruptedException e) {
                     }
                 }
-                logger.info("Second print: {}", number);
+                log.info("Second print: {}", number);
                 stopper.set(false);
                 sleep();
                 notify();
