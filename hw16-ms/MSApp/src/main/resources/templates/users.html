@@ -5,10 +5,39 @@
     <title>Пользователи</title>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-    <script src="/webjars/jquery/jquery.min.js"></script>
     <script>
         let stompClient = null;
+        window.onload = function () {
+            stompClient = Stomp.over(new SockJS("/api/ws/endpoint"));
+            stompClient.connect({}, function () {
+                stompClient.subscribe("/topic/newUser", function (mess) {
+                    addUserToTable(JSON.parse(mess.body))
+                });
+            });
+        }
 
+        function addUserToTable(user) {
+            const usersTable = document.getElementById('usersTable');
+            const tr = document.createElement('tr');
+            const id = document.createElement('td');
+            const name = document.createElement('td');
+            const login = document.createElement('td');
+            const password = document.createElement('td');
+            id.textContent = user.id
+            name.textContent = user.name
+            login.textContent = user.login
+            password.textContent = user.password
+            tr.append(id, name, login, password)
+            usersTable.append(tr)
+        }
+
+        function saveUser() {
+            stompClient.send("/app/addUser", {}, JSON.stringify({
+                name: document.getElementById('holder-name').value,
+                login: document.getElementById('holder-login').value,
+                password: document.getElementById('holder-pass').value
+            }));
+        }
     </script>
     <style type="text/css">
         body {
@@ -35,19 +64,19 @@
     <form id="create-form"  accept-charset="utf-8">
         <div class="row">
             <label for="holder-name">Имя:</label>
-            <input id="holder-name" name="name" type="text"  value="John Doe"/>
+            <input id="holder-name" name="name" type="text"  value=""/>
         </div>
         <div class="row">
             <label for="holder-login">Логин:</label>
-            <input id="holder-login" name="login" type="text" value="123"/>
+            <input id="holder-login" name="login" type="text" value=""/>
         </div>
         <div class="row">
             <label for="holder-pass">Пароль:</label>
-            <input id="holder-pass" name="password" type="text" value="1234"/>
+            <input id="holder-pass" name="password" type="text" value=""/>
         </div>
 
         <div class="row">
-            <button onclick="addUser()">Добавить</button>
+            <button onclick="saveUser()">Добавить</button>
         </div>
     </form>
 </div>

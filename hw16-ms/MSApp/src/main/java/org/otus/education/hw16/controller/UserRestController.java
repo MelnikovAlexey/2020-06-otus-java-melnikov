@@ -1,9 +1,9 @@
 package org.otus.education.hw16.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 import org.otus.education.hw16.data.core.model.User;
 import org.otus.education.hw16.data.core.service.DBServiceUser;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +21,6 @@ public class UserRestController {
     @GetMapping
     public List<User> getUsers() {
         return dbServiceUser.getUsers();
-    }
-
-
-    @DeleteMapping("{id}")
-    public void removeUserById(@PathVariable(name = "id") long id) {
-        dbServiceUser.removeUserById(id);
     }
 
     @PostMapping
