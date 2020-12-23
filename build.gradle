@@ -39,7 +39,8 @@ allprojects {
             dependency("com.google.code.gson:gson:2.8.6")
             dependency("com.google.protobuf:protobuf-java-util:3.12.1")
             dependency("org.flywaydb:flyway-core:6.4.4")
-
+            dependency("org.webjars:sockjs-client:1.1.2")
+            dependency("org.webjars:stomp-websocket:2.3.3-1")
         }
     }
 

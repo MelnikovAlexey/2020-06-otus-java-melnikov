@@ -1,9 +1,8 @@
 plugins {
     id 'java'
+    id 'io.freefair.lombok'
 }
 
-group 'org.otus.education'
-version 'unspecified'
 
 repositories {
     mavenCentral()
