@@ -6,8 +6,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import java.security.Principal;
-
 @Controller
 public class UserWebSocketController {
 
@@ -20,7 +18,7 @@ public class UserWebSocketController {
     }
 
     @MessageMapping("/addUser")
-    public void addUser(User user, Principal principal) {
+    public void addUser(User user) {
         frontendService.saveUser(
                 user,
                 us -> template.convertAndSend("/topic/newUser", us)
