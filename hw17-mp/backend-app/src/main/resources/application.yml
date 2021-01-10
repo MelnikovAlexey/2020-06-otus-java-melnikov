@@ -15,4 +15,6 @@ app:
 
 logging:
   level:
-    org.springframework: debug
+    org:
+      springframework: info
+      flywaydb: trace

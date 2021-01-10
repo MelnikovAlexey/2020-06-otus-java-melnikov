@@ -29,11 +29,14 @@ public class GetUserDataRequestHandler implements RequestHandler<UserDtoResultTy
     @Override
     public Optional<Message> handle(Message msg) {
         final UserDtoResultType userData = MessageHelper.getPayload(msg);
-        return switch (MessageType.getNameOrUnknown(msg.getType())) {
-            case USER_LIST -> findAllUsers(msg);
-            case USER_SAVE -> saveUser(msg, userData.getUserDto());
-            default -> Optional.empty();
-        };
+        if (MessageType.USER_DATA.getName().equals(msg.getType())) {
+            return Optional.empty();// findUser(msg, userData.getUserDto());
+        } else if (MessageType.USER_SAVE.getName().equals(msg.getType())) {
+            return saveUser(msg, userData.getUserDto());
+        } else if (MessageType.USER_LIST.getName().equals(msg.getType())) {
+            return findAllUsers(msg);
+        }
+        return Optional.empty();
     }
 
     private Optional<Message> saveUser(Message msg, UserDto userData) {

@@ -1,7 +1,7 @@
 package ru.otus.messagesystem.message;
 
 public enum MessageType {
-    USER_DATA("UserData"), USER_SAVE("UserSave"), USER_LIST("UserList"),UNKNOWN("Unknown");
+    USER_DATA("UserData"), USER_SAVE("UserSave"), USER_LIST("UserList");
 
     private final String name;
 
@@ -13,11 +13,4 @@ public enum MessageType {
         return name;
     }
 
-    public static MessageType getNameOrUnknown(String value) {
-        try {
-            return valueOf(value);
-        } catch (IllegalArgumentException e) {
-            return MessageType.UNKNOWN;
-        }
-    }
 }
