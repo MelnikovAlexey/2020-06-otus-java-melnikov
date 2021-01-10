@@ -1,4 +1,4 @@
-package org.otus.education.hw17.front;
+package org.otus.education.hw17;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

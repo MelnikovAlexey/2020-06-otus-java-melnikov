@@ -1,8 +1,6 @@
-package org.otus.education.hw17.front.dto;
+package org.otus.education.hw17.dto;
 
 import ru.otus.messagesystem.client.ResultDataType;
-
-import java.io.Serializable;
 
 public class UserDto extends ResultDataType {
     private static final long serialVersionUID = 1L;

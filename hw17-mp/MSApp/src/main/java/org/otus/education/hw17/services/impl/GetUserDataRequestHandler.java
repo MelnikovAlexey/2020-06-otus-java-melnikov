@@ -30,7 +30,6 @@ public class GetUserDataRequestHandler implements RequestHandler<UserDtoResultTy
     public Optional<Message> handle(Message msg) {
         final UserDtoResultType userData = MessageHelper.getPayload(msg);
         return switch (MessageType.getNameOrUnknown(msg.getType())) {
-            case USER_DATA -> findUser(msg, userData.getUserDto());
             case USER_LIST -> findAllUsers(msg);
             case USER_SAVE -> saveUser(msg, userData.getUserDto());
             default -> Optional.empty();
@@ -50,23 +49,6 @@ public class GetUserDataRequestHandler implements RequestHandler<UserDtoResultTy
             log.error("", e);
         }
         return -1L;
-    }
-
-    private Optional<Message> findUser(Message msg, UserDto userData) {
-        val userDto = registrar.findFirst()
-                .map(userService -> doFind(userData, userService))
-                .orElse(null);
-        log.info("User requested and retrieved {}", userDto);
-        return Optional.of(MessageBuilder.buildReplyMessage(msg, UserDtoResultType.getSingle(userDto)));
-    }
-
-    private UserDto doFind(UserDto userData, UserService userService) {
-        try {
-            return userService.findUser(userData.getUserId());
-        } catch (RemoteException e) {
-            log.error("", e);
-        }
-        return null;
     }
 
 

@@ -1,8 +1,8 @@
-package org.otus.education.hw17.front.config;
+package org.otus.education.hw17.config;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.otus.education.hw17.front.protobuf.generated.RemoteUserServiceGrpc;
+import org.otus.education.hw17.protobuf.generated.RemoteUserServiceGrpc;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

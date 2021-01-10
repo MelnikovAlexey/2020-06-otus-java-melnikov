@@ -27,37 +27,6 @@ public final class RemoteUserServiceGrpc {
   public static final String SERVICE_NAME = "org.otus.education.hw17.protobuf.generated.RemoteUserService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<org.otus.education.hw17.protobuf.generated.UserIdQuery,
-      org.otus.education.hw17.protobuf.generated.UserMessage> getGetUserMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "getUser",
-      requestType = org.otus.education.hw17.protobuf.generated.UserIdQuery.class,
-      responseType = org.otus.education.hw17.protobuf.generated.UserMessage.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<org.otus.education.hw17.protobuf.generated.UserIdQuery,
-      org.otus.education.hw17.protobuf.generated.UserMessage> getGetUserMethod() {
-    io.grpc.MethodDescriptor<org.otus.education.hw17.protobuf.generated.UserIdQuery, org.otus.education.hw17.protobuf.generated.UserMessage> getGetUserMethod;
-    if ((getGetUserMethod = RemoteUserServiceGrpc.getGetUserMethod) == null) {
-      synchronized (RemoteUserServiceGrpc.class) {
-        if ((getGetUserMethod = RemoteUserServiceGrpc.getGetUserMethod) == null) {
-          RemoteUserServiceGrpc.getGetUserMethod = getGetUserMethod =
-              io.grpc.MethodDescriptor.<org.otus.education.hw17.protobuf.generated.UserIdQuery, org.otus.education.hw17.protobuf.generated.UserMessage>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getUser"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.otus.education.hw17.protobuf.generated.UserIdQuery.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.otus.education.hw17.protobuf.generated.UserMessage.getDefaultInstance()))
-              .setSchemaDescriptor(new RemoteUserServiceMethodDescriptorSupplier("getUser"))
-              .build();
-        }
-      }
-    }
-    return getGetUserMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<org.otus.education.hw17.protobuf.generated.Empty,
       org.otus.education.hw17.protobuf.generated.UserMessage> getFindAllUsersMethod;
 
@@ -170,13 +139,6 @@ public final class RemoteUserServiceGrpc {
 
     /**
      */
-    public void getUser(org.otus.education.hw17.protobuf.generated.UserIdQuery request,
-        io.grpc.stub.StreamObserver<org.otus.education.hw17.protobuf.generated.UserMessage> responseObserver) {
-      asyncUnimplementedUnaryCall(getGetUserMethod(), responseObserver);
-    }
-
-    /**
-     */
     public void findAllUsers(org.otus.education.hw17.protobuf.generated.Empty request,
         io.grpc.stub.StreamObserver<org.otus.education.hw17.protobuf.generated.UserMessage> responseObserver) {
       asyncUnimplementedUnaryCall(getFindAllUsersMethod(), responseObserver);
@@ -191,13 +153,6 @@ public final class RemoteUserServiceGrpc {
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getGetUserMethod(),
-            asyncUnaryCall(
-              new MethodHandlers<
-                org.otus.education.hw17.protobuf.generated.UserIdQuery,
-                org.otus.education.hw17.protobuf.generated.UserMessage>(
-                  this, METHODID_GET_USER)))
           .addMethod(
             getFindAllUsersMethod(),
             asyncServerStreamingCall(
@@ -228,14 +183,6 @@ public final class RemoteUserServiceGrpc {
     protected RemoteUserServiceStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new RemoteUserServiceStub(channel, callOptions);
-    }
-
-    /**
-     */
-    public void getUser(org.otus.education.hw17.protobuf.generated.UserIdQuery request,
-        io.grpc.stub.StreamObserver<org.otus.education.hw17.protobuf.generated.UserMessage> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getGetUserMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -271,13 +218,6 @@ public final class RemoteUserServiceGrpc {
 
     /**
      */
-    public org.otus.education.hw17.protobuf.generated.UserMessage getUser(org.otus.education.hw17.protobuf.generated.UserIdQuery request) {
-      return blockingUnaryCall(
-          getChannel(), getGetUserMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
     public java.util.Iterator<org.otus.education.hw17.protobuf.generated.UserMessage> findAllUsers(
         org.otus.education.hw17.protobuf.generated.Empty request) {
       return blockingServerStreamingCall(
@@ -308,14 +248,6 @@ public final class RemoteUserServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<org.otus.education.hw17.protobuf.generated.UserMessage> getUser(
-        org.otus.education.hw17.protobuf.generated.UserIdQuery request) {
-      return futureUnaryCall(
-          getChannel().newCall(getGetUserMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
     public com.google.common.util.concurrent.ListenableFuture<org.otus.education.hw17.protobuf.generated.UserMessage> saveUser(
         org.otus.education.hw17.protobuf.generated.UserMessage request) {
       return futureUnaryCall(
@@ -323,9 +255,8 @@ public final class RemoteUserServiceGrpc {
     }
   }
 
-  private static final int METHODID_GET_USER = 0;
-  private static final int METHODID_FIND_ALL_USERS = 1;
-  private static final int METHODID_SAVE_USER = 2;
+  private static final int METHODID_FIND_ALL_USERS = 0;
+  private static final int METHODID_SAVE_USER = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -344,10 +275,6 @@ public final class RemoteUserServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_GET_USER:
-          serviceImpl.getUser((org.otus.education.hw17.protobuf.generated.UserIdQuery) request,
-              (io.grpc.stub.StreamObserver<org.otus.education.hw17.protobuf.generated.UserMessage>) responseObserver);
-          break;
         case METHODID_FIND_ALL_USERS:
           serviceImpl.findAllUsers((org.otus.education.hw17.protobuf.generated.Empty) request,
               (io.grpc.stub.StreamObserver<org.otus.education.hw17.protobuf.generated.UserMessage>) responseObserver);
@@ -417,7 +344,6 @@ public final class RemoteUserServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new RemoteUserServiceFileDescriptorSupplier())
-              .addMethod(getGetUserMethod())
               .addMethod(getFindAllUsersMethod())
               .addMethod(getSaveUserMethod())
               .build();

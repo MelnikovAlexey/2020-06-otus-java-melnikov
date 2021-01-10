@@ -18,7 +18,6 @@ message UserIdQuery{
 message Empty {}
 
 service RemoteUserService {
-    rpc getUser(UserIdQuery) returns (UserMessage);
 
     rpc findAllUsers(Empty) returns (stream UserMessage);
 

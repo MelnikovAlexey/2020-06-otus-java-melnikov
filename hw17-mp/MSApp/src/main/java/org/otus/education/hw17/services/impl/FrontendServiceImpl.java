@@ -26,12 +26,6 @@ public class FrontendServiceImpl implements FrontendService {
     }
 
     @Override
-    public void getUser(long userId, MessageCallback<UserDtoResultType> dataConsumer) {
-        val message = msClient.produceMessage(backendService, UserDtoResultType.getSingle(new UserDto(userId)), MessageType.USER_DATA, dataConsumer);
-        msClient.sendMessage(message);
-    }
-
-    @Override
     public void saveUser(UserDto userDto, MessageCallback<UserDtoResultType> dataConsumer) {
         val message = msClient.produceMessage(backendService, UserDtoResultType.getSingle(userDto), MessageType.USER_SAVE, dataConsumer);
         msClient.sendMessage(message);

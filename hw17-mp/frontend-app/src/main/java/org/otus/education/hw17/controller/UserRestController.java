@@ -1,8 +1,8 @@
-package org.otus.education.hw17.front.controller;
+package org.otus.education.hw17.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.otus.education.hw17.front.dto.UserDto;
-import org.otus.education.hw17.front.services.FrontendService;
+import org.otus.education.hw17.dto.UserDto;
+import org.otus.education.hw17.services.FrontendService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;

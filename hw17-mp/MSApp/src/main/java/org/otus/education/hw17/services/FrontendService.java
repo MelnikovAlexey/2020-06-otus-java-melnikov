@@ -6,7 +6,6 @@ import org.otus.education.hw17.dto.UserDtoResultType;
 import ru.otus.messagesystem.client.MessageCallback;
 
 public interface FrontendService {
-    void getUser(long userId, MessageCallback<UserDtoResultType> dataConsumer);
 
     void saveUser(UserDto userDto, MessageCallback<UserDtoResultType> dataConsumer);
 

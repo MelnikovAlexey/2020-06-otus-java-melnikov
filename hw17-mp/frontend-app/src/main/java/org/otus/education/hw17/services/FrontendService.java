@@ -1,12 +1,11 @@
-package org.otus.education.hw17.front.services;
+package org.otus.education.hw17.services;
 
-import org.otus.education.hw17.front.dto.UserDto;
+import org.otus.education.hw17.dto.UserDto;
 import ru.otus.messagesystem.client.MessageCallback;
 
 import java.util.List;
 
 public interface FrontendService {
-    void getUser(long userId, MessageCallback<UserDto> dataConsumer);
 
     void saveUser(UserDto userDto, MessageCallback<UserDto> dataConsumer);
 

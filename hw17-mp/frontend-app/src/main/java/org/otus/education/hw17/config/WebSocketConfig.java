@@ -1,4 +1,4 @@
-package org.otus.education.hw17.front.config;
+package org.otus.education.hw17.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

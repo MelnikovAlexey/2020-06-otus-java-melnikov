@@ -20,13 +20,13 @@ import static java.util.Objects.isNull;
 public class RemoteUserServiceImpl extends RemoteUserServiceGrpc.RemoteUserServiceImplBase {
     private final FrontendService frontendService;
 
-    @Override
+  /*  @Override
     public void getUser(UserIdQuery request, StreamObserver<UserMessage> responseObserver) {
         frontendService.getUser(request.getId(), userData -> {
             responseObserver.onNext(user2UserMessage(userData.getUserDto()));
             responseObserver.onCompleted();
         });
-    }
+    }*/
 
     @Override
     public void findAllUsers(Empty request, StreamObserver<UserMessage> responseObserver) {

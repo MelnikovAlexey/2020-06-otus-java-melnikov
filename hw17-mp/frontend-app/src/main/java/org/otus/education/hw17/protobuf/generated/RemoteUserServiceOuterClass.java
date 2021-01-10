@@ -42,17 +42,14 @@ public final class RemoteUserServiceOuterClass {
       "ation.hw17.protobuf.generated\"H\n\013UserMes" +
       "sage\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001(\t\022\r\n\005login\030" +
       "\003 \001(\t\022\020\n\010password\030\004 \001(\t\"\031\n\013UserIdQuery\022\n" +
-      "\n\002id\030\001 \001(\003\"\007\n\005Empty2\214\003\n\021RemoteUserServic" +
-      "e\022{\n\007getUser\0227.org.otus.education.hw17.p" +
-      "rotobuf.generated.UserIdQuery\0327.org.otus" +
-      ".education.hw17.protobuf.generated.UserM" +
-      "essage\022|\n\014findAllUsers\0221.org.otus.educat" +
-      "ion.hw17.protobuf.generated.Empty\0327.org." +
-      "otus.education.hw17.protobuf.generated.U" +
-      "serMessage0\001\022|\n\010saveUser\0227.org.otus.educ" +
-      "ation.hw17.protobuf.generated.UserMessag" +
-      "e\0327.org.otus.education.hw17.protobuf.gen" +
-      "erated.UserMessageB\002P\001b\006proto3"
+      "\n\002id\030\001 \001(\003\"\007\n\005Empty2\217\002\n\021RemoteUserServic" +
+      "e\022|\n\014findAllUsers\0221.org.otus.education.h" +
+      "w17.protobuf.generated.Empty\0327.org.otus." +
+      "education.hw17.protobuf.generated.UserMe" +
+      "ssage0\001\022|\n\010saveUser\0227.org.otus.education" +
+      ".hw17.protobuf.generated.UserMessage\0327.o" +
+      "rg.otus.education.hw17.protobuf.generate" +
+      "d.UserMessageB\002P\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

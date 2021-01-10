@@ -1,12 +1,11 @@
-package org.otus.education.hw17.front.services;
+package org.otus.education.hw17.services;
 
 import com.google.common.collect.Lists;
-import lombok.val;
-import org.otus.education.hw17.front.dto.UserDto;
-import org.otus.education.hw17.front.protobuf.generated.Empty;
-import org.otus.education.hw17.front.protobuf.generated.RemoteUserServiceGrpc;
-import org.otus.education.hw17.front.protobuf.generated.UserIdQuery;
-import org.otus.education.hw17.front.protobuf.generated.UserMessage;
+import org.otus.education.hw17.dto.UserDto;
+import org.otus.education.hw17.protobuf.generated.Empty;
+import org.otus.education.hw17.protobuf.generated.RemoteUserServiceGrpc;
+import org.otus.education.hw17.protobuf.generated.UserIdQuery;
+import org.otus.education.hw17.protobuf.generated.UserMessage;
 import org.springframework.stereotype.Service;
 import ru.otus.messagesystem.client.MessageCallback;
 
@@ -20,12 +19,6 @@ public class FrontendServiceImpl implements FrontendService {
 
     public FrontendServiceImpl(RemoteUserServiceGrpc.RemoteUserServiceBlockingStub stub) {
         this.stub = stub;
-    }
-
-    @Override
-    public void getUser(long userId, MessageCallback<UserDto> dataConsumer) {
-        UserMessage message = stub.getUser(UserIdQuery.newBuilder().setId(userId).build());
-        dataConsumer.accept(message.getId() != userId ? null : message2Dto(message));
     }
 
     @Override
