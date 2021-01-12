@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package org.otus.education.hw17.protobuf.generated;
+
+option java_multiple_files = true;
+
+message UserMessage {
+    int64 id = 1;
+    string name = 2;
+    string login = 3;
+    string password = 4;
+}
+
+message UserIdQuery{
+    int64 id = 1;
+}
+
+message Empty {}
+
+service RemoteUserService {
+
+    rpc findAllUsers(Empty) returns (stream UserMessage);
+
+    rpc saveUser(UserMessage) returns (UserMessage);
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="org" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script>
+        let stompClient = null;
+
+        function connect() {
+            stompClient = Stomp.over(new SockJS('/api/ws/endpoint'));
+            stompClient.connect({}, (frame) => {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/newUser', (user) => addUser(JSON.parse(user.body)));
+            });
+        }
+
+        function fillUsers(users) {
+            let rows = users
+                .map(user => {
+                    let tds = "<td>" + user.name + "</td>" +
+                        "<td>" + user.login + "</td>" +
+                        "<td>" + user.password + "</td>";
+                    return "<tr>" + tds + "</tr>";
+                })
+                .join("");
+            $('#users tbody').append(rows);
+        }
+
+        function addUser(user) {
+            let data = "<tr></tr><td>" + user.name + "</td>" +
+                "<td>" + user.login + "</td>" +
+                "<td>" + user.password + "</td></tr>";
+            $('#users tbody').append(data);
+        }
+
+        function getUsers() {
+            const url = "/api/users";
+            fetch(url)
+                .then(resp => resp.json())
+                .then(users => fillUsers(users));
+        }
+
+        const addRequest = () => stompClient.send("/app/addUser", {}, JSON.stringify({
+            'name': $('#holder-name').val(),
+            'login': $('#holder-login').val(),
+            'password': $('#holder-pass').val()
+        }))
+
+        $(function () {
+            $("form").on('submit', (event) => {
+                event.preventDefault();
+            });
+            $("#save").click(addRequest);
+            connect();
+            getUsers();
+        });
+    </script>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: #968c8c;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <h4>Добавить пользователя</h4>
+    <form id="create-form"  accept-charset="utf-8">
+        <div class="row">
+            <label for="holder-name">Имя:</label>
+            <input id="holder-name" name="name" type="text"  value=""/>
+        </div>
+        <div class="row">
+            <label for="holder-login">Логин:</label>
+            <input id="holder-login" name="login" type="text" value=""/>
+        </div>
+        <div class="row">
+            <label for="holder-pass">Пароль:</label>
+            <input id="holder-pass" name="password" type="text" value=""/>
+        </div>
+
+        <div class="row">
+            <button id="save" type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+
+<h4>Список пользователей</h4>
+<table id="users" style="width: 400px">
+    <thead>
+        <tr>
+            <td style="width: 150px">Имя</td>
+            <td style="width: 100px">Логин</td>
+            <td style="width: 100px">Пароль</td>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+</body>
+</html>
